@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+        maven { url 'https://jitpack.io' }
+    }
+}
+include ':androbd', ':library', ':plugin',':androidauto-debug'
+
+

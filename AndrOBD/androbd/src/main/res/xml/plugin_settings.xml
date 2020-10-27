@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:icon="@android:drawable/ic_menu_manage"
+                    android:title="@string/settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+    <Preference
+        android:title="@string/app_name"
+        android:summary="@string/app_version" />
+
+    <PreferenceCategory
+        android:title="@string/plugin_settings">
+
+        <MultiSelectListPreference
+            android:key="selection_items"
+            android:summary="@string/data_items_sum"
+            android:title="@string/data_items"/>
+
+        <EditTextPreference
+            android:defaultValue="30"
+            android:key="update_period"
+            android:summary="@string/update_period_sum"
+            android:title="@string/update_period"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

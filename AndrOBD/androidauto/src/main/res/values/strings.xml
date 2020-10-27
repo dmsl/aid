@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name" translatable="false">AndroidAuto</string>
+    <string name="settings" translatable="false">Plugin Settings</string>
+    <string name="mqtt_settings" translatable="false">MQTT settings</string>
+    <string name="mqtt_hostname" translatable="false">MQTT host name</string>
+    <string name="mqtt_hostname_sum" translatable="false">MQTT broker host name / IP address</string>
+    <string name="ip_port" translatable="false">IP port</string>
+    <string name="ip_port_sum" translatable="false">MQTT broker IP port number</string>
+    <string name="user_name" translatable="false">User name</string>
+    <string name="user_name_sum" translatable="false">MQTT broker login name</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="password_sum" translatable="false">MQTT broker login password</string>
+    <string name="plugin_settings" translatable="false">Plugin settings</string>
+    <string name="update_period" translatable="false">Update period</string>
+    <string name="update_period_sum" translatable="false">Time [seconds] between MQTT updates</string>
+    <string name="mqtt_prefix" translatable="false">MQTT prefix</string>
+    <string name="mqtt_prefix_sum" translatable="false">Prefix of all published MQTT topics</string>
+    <string name="mqtt_retain" translatable="false">MQTT retain</string>
+    <string name="mqtt_retain_sum" translatable="false">MQTT retain flag for all published topics</string>
+    <string name="mqtt_qos" translatable="false">MQTT Qos</string>
+    <string name="mqtt_qos_sum" translatable="false">MQTT Quality of service (0-2)</string>
+    <string name="data_items" translatable="false">Data items</string>
+    <string name="data_items_sum" translatable="false">Select data items to be published to MQTT</string>
+    <string-array name="mqtt_qos" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string name="mqtt_protocol" translatable="false">MQTT protocol</string>
+    <string name="mqtt_protocol_sum" translatable="false">Transport protocol to connect MQTT broker</string>
+    <string name="mqtt_prot_tcp" translatable="false">tcp://</string>
+    <string name="mqtt_prot_ssl" translatable="false">ssl://</string>
+    <string name="mqtt_clientid" translatable="false">Client ID</string>
+    <string name="mqtt_clientid_sum" translatable="false">Client id to be used for MQTT broker connection</string>
+    <string-array name="mqtt_prot" translatable="false">
+        <item>@string/mqtt_prot_tcp</item>
+        <item>@string/mqtt_prot_ssl</item>
+    </string-array>
+</resources>

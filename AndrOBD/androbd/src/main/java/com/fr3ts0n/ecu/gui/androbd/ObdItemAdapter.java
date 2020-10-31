@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -230,7 +231,6 @@ class ObdItemAdapter extends ArrayAdapter<Object>
         // set value
         tvValue.setText(fmtText);
         tvUnits.setText(currPv.getUnits());
-
         return convertView;
     }
 
@@ -243,6 +243,7 @@ class ObdItemAdapter extends ArrayAdapter<Object>
         public void pvChanged(PvChangeEvent event)
         {
             // handle data item updates
+            Log.d("handlercalled","now");
             if (allowDataUpdates)
             {
                 IndexedProcessVar pv = (IndexedProcessVar) event.getSource();
@@ -256,7 +257,8 @@ class ObdItemAdapter extends ArrayAdapter<Object>
 
                     }
                 }
-
+                String values = pv.get(EcuDataPv.FID_MNEMONIC).toString()+" "+event.getValue().toString();
+                Log.d("dtupdates", values);
                 // send update to plugin handler
                 if (PluginManager.pluginHandler != null)
                 {

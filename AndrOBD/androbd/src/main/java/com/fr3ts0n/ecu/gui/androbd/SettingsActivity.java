@@ -29,6 +29,7 @@ import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.fr3ts0n.ecu.EcuDataItem;
@@ -89,7 +90,6 @@ public class SettingsActivity
 	static final String ELM_MIN_TIMEOUT = "elm_min_timeout";
 	static final String ELM_CMD_DISABLE = "elm_cmd_disable";
     static final String ELM_TIMING_SELECT = "adaptive_timing_mode";
-    private static final String KEY_BITCOIN = "bitcoin";
 
 	/*
 	 * (non-Javadoc)
@@ -122,24 +122,18 @@ public class SettingsActivity
 			// Load the preferences from an XML resource
 			addPreferencesFromResource(R.xml.settings);
 
-			for (String key : extKeys)
-			{
-				setPrefsText(key);
-			}
-
 			// set up communication media selection
-			setupCommMediaSelection();
+			//setupCommMediaSelection();
 			// set up protocol selection
-			setupProtoSelection();
+			//setupProtoSelection();
 			// set up ELM command selection
-			setupElmCmdSelection();
+//			setupElmCmdSelection();
             // set up ELM adaptive timing mode selection
-            setupElmTimingSelection();
+            //setupElmTimingSelection();
 			// set up selectable PID list
 			setupPidSelection();
 			// update network selection fields
 			updateNetworkSelections();
-			findPreference(KEY_BITCOIN).setOnPreferenceClickListener(this);
 			// add handler for selection update
 			prefs.registerOnSharedPreferenceChangeListener(this);
 		}
@@ -336,17 +330,11 @@ public class SettingsActivity
 			Intent intent = preference.getIntent();
 			try
 			{
-				if(KEY_BITCOIN.equals(preference.getKey()))
-				{
-					// special handling for bitcoin VIEW intent
-					startActivity(intent);
-				}
-				else
-				{
+
 					// OPEN intents require result handling
 					intent.addCategory(Intent.CATEGORY_OPENABLE);
 					startActivityForResult(intent, preference.hashCode());
-				}
+
 			}
 			catch(Exception e)
 			{

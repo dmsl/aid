@@ -27,7 +27,6 @@ public class PluginManager
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         // create a new PluginHandler
         if(pluginHandler == null)
         {

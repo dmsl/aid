@@ -27,10 +27,10 @@ public class AndroidAutoPlugin
 {
     static final PluginInfo myInfo = new PluginInfo("AndroidAuto",
             AndroidAutoPlugin.class,
-            "Show AndrOBD measurements ",
+            "Show Android OBD measurements  on Android Auto screen",
             "Copyright (C)",
             "GPLV3+", //check the lisence
-            "https://github.com/fr3ts0n/AndrOBD"
+            "https://github.com/dmsl/androidauto"
     );
 
     /**

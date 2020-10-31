@@ -38,6 +38,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -388,7 +389,8 @@ public class MainActivity extends PluginManager
 		setAutoHider(prefs.getBoolean(PREF_AUTOHIDE, false));
 
 		// set content view
-		setContentView(R.layout.startup_layout);
+		//REMOVED CONTENT
+		//setContentView(R.layout.startup_layout);
 
 		// override comm medium with USB connect intent
 		if ("android.hardware.usb.action.USB_DEVICE_ATTACHED".equals(getIntent().getAction()))
@@ -582,12 +584,12 @@ public class MainActivity extends PluginManager
 			case R.id.secure_connect_scan:
 				setMode(MODE.ONLINE);
 				return true;
-
+			/* REMOVED preselections
 			case R.id.reset_preselections:
 				clearPreselections();
 				recreate();
 				return true;
-
+			*/
 			case R.id.disconnect:
 				// stop communication service
 				if (mCommService != null) { mCommService.stop(); }
@@ -603,7 +605,7 @@ public class MainActivity extends PluginManager
 			case R.id.plugin_manager:
 				setManagerView();
 				return true;
-
+			/*
 			case R.id.save:
 				// save recorded data (threaded)
 				fileHelper.saveDataThreaded();
@@ -612,7 +614,7 @@ public class MainActivity extends PluginManager
 			case R.id.load:
 				setMode(MODE.FILE);
 				return true;
-
+			*/
 			case R.id.service_none:
 				setObdService(ObdProt.OBD_SVC_NONE, item.getTitle());
 				return true;
@@ -624,15 +626,15 @@ public class MainActivity extends PluginManager
 			case R.id.service_vid_data:
 				setObdService(ObdProt.OBD_SVC_VEH_INFO, item.getTitle());
 				return true;
-
+			/* REMOVED
 			case R.id.service_freezeframes:
 				setObdService(ObdProt.OBD_SVC_FREEZEFRAME, item.getTitle());
 				return true;
-
+			*/
 			case R.id.service_codes:
 				setObdService(ObdProt.OBD_SVC_READ_CODES, item.getTitle());
 				return true;
-
+			/* REMOVED
 			case R.id.service_permacodes:
 				setObdService(ObdProt.OBD_SVC_PERMACODES, item.getTitle());
 				return true;
@@ -640,7 +642,7 @@ public class MainActivity extends PluginManager
 			case R.id.service_pendingcodes:
 				setObdService(ObdProt.OBD_SVC_PENDINGCODES, item.getTitle());
 				return true;
-
+			*/
 			case R.id.service_clearcodes:
 				clearObdFaultCodes();
 				setObdService(ObdProt.OBD_SVC_READ_CODES, item.getTitle());
@@ -770,7 +772,8 @@ public class MainActivity extends PluginManager
 					// load data ...
 					fileHelper.loadDataThreaded(uri, mHandler);
 					// don't allow saving it again
-					setMenuItemEnable(R.id.save, false);
+					// REMOVED SAVE
+					//setMenuItemEnable(R.id.save, false);
 					setMenuItemEnable(R.id.obd_services, true);
 				}
 				break;
@@ -813,34 +816,35 @@ public class MainActivity extends PluginManager
 					getPrefsInt(SettingsActivity.KEY_COMM_MEDIUM, 0)];
 		}
 
-		// enable/disable ELM adaptive timing
-		if (key == null || ELM_ADAPTIVE_TIMING.equals(key))
-		{
-			CommService.elm.mAdaptiveTiming.setMode(
-				ElmProt.AdaptTimingMode.valueOf(
-					prefs.getString(ELM_ADAPTIVE_TIMING,
-						ElmProt.AdaptTimingMode.OFF.toString())));
-		}
+		//REMOVED CONTENT
+//		// enable/disable ELM adaptive timing
+//		if (key == null || ELM_ADAPTIVE_TIMING.equals(key))
+//		{
+//			CommService.elm.mAdaptiveTiming.setMode(
+//				ElmProt.AdaptTimingMode.valueOf(
+//					prefs.getString(ELM_ADAPTIVE_TIMING,
+//						ElmProt.AdaptTimingMode.OFF.toString())));
+//		}
+		//REMOVED
+//		// set protocol flag to initiate immediate reset on NRC reception
+//		if (key == null || ELM_RESET_ON_NRC.equals(key))
+//		{ CommService.elm.setResetOnNrc(prefs.getBoolean(ELM_RESET_ON_NRC, false)); }
+//		REMOVED
+//		// set custom ELM init commands
+//		if (key == null || ELM_CUSTOM_INIT_CMDS.equals(key))
+//		{
+//			String value = prefs.getString(ELM_CUSTOM_INIT_CMDS, null);
+//			if (value != null && value.length() > 0)
+//			{ CommService.elm.setCustomInitCommands(value.split("\n")); }
+//		}
 
-		// set protocol flag to initiate immediate reset on NRC reception
-		if (key == null || ELM_RESET_ON_NRC.equals(key))
-		{ CommService.elm.setResetOnNrc(prefs.getBoolean(ELM_RESET_ON_NRC, false)); }
-
-		// set custom ELM init commands
-		if (key == null || ELM_CUSTOM_INIT_CMDS.equals(key))
-		{
-			String value = prefs.getString(ELM_CUSTOM_INIT_CMDS, null);
-			if (value != null && value.length() > 0)
-			{ CommService.elm.setCustomInitCommands(value.split("\n")); }
-		}
-
-		// ELM timeout
-		if (key == null || SettingsActivity.ELM_MIN_TIMEOUT.equals(key))
-		{
-			CommService.elm.mAdaptiveTiming.setElmTimeoutMin(
-				getPrefsInt(SettingsActivity.ELM_MIN_TIMEOUT,
-					CommService.elm.mAdaptiveTiming.getElmTimeoutMin()));
-		}
+//		// ELM timeout REMOVED
+//		if (key == null || SettingsActivity.ELM_MIN_TIMEOUT.equals(key))
+//		{
+//			CommService.elm.mAdaptiveTiming.setElmTimeoutMin(
+//				getPrefsInt(SettingsActivity.ELM_MIN_TIMEOUT,
+//					CommService.elm.mAdaptiveTiming.getElmTimeoutMin()));
+//		}
 
 		// ... measurement system
 		if (key == null || MEASURE_SYSTEM.equals(key))
@@ -858,19 +862,21 @@ public class MainActivity extends PluginManager
 		if (key == null || key.startsWith("ext_file-"))
 		{ loadPreferredExtensions(); }
 
+		//REMOVED CONTENT
 		// set disabled ELM commands
-		if (key == null || SettingsActivity.ELM_CMD_DISABLE.equals(key))
-		{
-			ElmProt.disableCommands(prefs.getStringSet(SettingsActivity.ELM_CMD_DISABLE, null));
-		}
+//		if (key == null || SettingsActivity.ELM_CMD_DISABLE.equals(key))
+//		{
+//			ElmProt.disableCommands(prefs.getStringSet(SettingsActivity.ELM_CMD_DISABLE, null));
+//		}
 
 		// AutoHide ToolBar
 		if (key == null || PREF_AUTOHIDE.equals(key) || PREF_AUTOHIDE_DELAY.equals(key))
 		{ setAutoHider(prefs.getBoolean(PREF_AUTOHIDE, false)); }
 
-		// Max. data disabling debounce counter
-		if (key == null || PREF_DATA_DISABLE_MAX.equals(key))
-		{ EcuDataItem.MAX_ERROR_COUNT = getPrefsInt(PREF_DATA_DISABLE_MAX, 3); }
+		//REMOVED
+//		// Max. data disabling debounce counter
+//		if (key == null || PREF_DATA_DISABLE_MAX.equals(key))
+//		{ EcuDataItem.MAX_ERROR_COUNT = getPrefsInt(PREF_DATA_DISABLE_MAX, 3); }
 	}
 
 	/**
@@ -1339,7 +1345,8 @@ public class MainActivity extends PluginManager
 			                           : R.drawable.mil_off);
 		}
 		// enable / disable freeze frames based on number of codes
-		setMenuItemEnable(R.id.service_freezeframes, (newNumCodes != 0));
+		//REMOVED
+		//setMenuItemEnable(R.id.service_freezeframes, (newNumCodes != 0));
 	}
 
 	/**

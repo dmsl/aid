@@ -368,7 +368,7 @@ public class ElmProt
 				pushCommand(CMD.ADAPTTIMING, mode.ordinal());
 			}
 		}
-		
+
 		/**
 		 * Adapt ELM message timeout
 		 *

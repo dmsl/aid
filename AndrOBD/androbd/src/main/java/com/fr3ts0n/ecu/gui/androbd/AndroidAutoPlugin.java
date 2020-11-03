@@ -1,8 +1,14 @@
 package com.fr3ts0n.ecu.gui.androbd;
 
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
+
+import android.os.IBinder;
 import android.util.Log;
 
 import com.fr3ts0n.androbd.plugin.Plugin;
@@ -18,11 +24,7 @@ import java.util.Map;
  * Show AndrOBD measurements to AndroidAuto
  */
 
-public class AndroidAutoPlugin
-        extends Plugin
-        implements Plugin.ConfigurationHandler,
-        Plugin.ActionHandler,
-        Plugin.DataReceiver,
+public class AndroidAutoPlugin extends Service implements
         SharedPreferences.OnSharedPreferenceChangeListener
 {
     static final PluginInfo myInfo = new PluginInfo("AndroidAuto",
@@ -55,7 +57,7 @@ public class AndroidAutoPlugin
     /**
      * set of items to be published
      */
-    HashSet<String> mSelectedItems = new HashSet<>();
+    protected HashSet<String> mSelectedItems = new HashSet<>();
     /**
      * Period between getting updates
      */
@@ -113,17 +115,17 @@ public class AndroidAutoPlugin
     {
         super.onCreate();
         // get preferences
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
         // get all shared preference values
         this.onSharedPreferenceChanged(prefs, null);
+        Log.d("pluginpref",prefs.getAll().toString());
         String[] selectedItems = new String[mSelectedItems.size()];
         mSelectedItems.toArray(selectedItems);
         Intent mIntent = new Intent("RefChild");
         mIntent.putExtra("selected",selectedItems);
         sendBroadcast(mIntent);
         updateThread.start();
-
     }
 
     @Override
@@ -136,6 +138,12 @@ public class AndroidAutoPlugin
         prefs.unregisterOnSharedPreferenceChangeListener(this);
 
         super.onDestroy();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     /**
@@ -172,7 +180,6 @@ public class AndroidAutoPlugin
     /**
      * get own plugin info
      */
-    @Override
     public PluginInfo getPluginInfo()
     {
         return myInfo;
@@ -181,33 +188,33 @@ public class AndroidAutoPlugin
     /**
      * Perform intended action of the plugin
      */
-    @Override
     public void performAction()
     {
 
         // Nothing to be sent - finished!
-        if (valueMap.isEmpty()) { return; }
-
-        Boolean insertedValues = false;
-        synchronized (valueMap)
-        {
-            // loop through data items
-            for (Map.Entry<String, String> entry : valueMap.entrySet())
-            {
-                // get topic and value
-                String topic = entry.getKey();
-                String value = entry.getValue();
-                try{
-                    db.insertValue(topic, Float.parseFloat(value));
-                    insertedValues = true;
-                }catch (Exception e){
-                    Log.d("AndroidAuto Module","Value could not be parsed");
-                }
-            }
-        }
-        if(insertedValues) {
+//        if (valueMap.isEmpty()) { return; }
+//
+//        Boolean insertedValues = false;
+//        synchronized (valueMap)
+//        {
+//            // loop through data items
+//            for (Map.Entry<String, String> entry : valueMap.entrySet())
+//            {
+//                // get topic and value
+//                String topic = entry.getKey();
+//                String value = entry.getValue();
+//                try{
+//                    db.insertValue(topic, Float.parseFloat(value));
+//                    insertedValues = true;
+//                }catch (Exception e){
+//                    Log.d("AndroidAuto Module","Value could not be parsed");
+//                }
+//            }
+//        }
+        if(true) {
             String[] selectedItems = new String[mSelectedItems.size()];
             mSelectedItems.toArray(selectedItems);
+            Log.d("auto","the selected are"+mSelectedItems.toString());
             Intent mIntent = new Intent("RefChild");
             mIntent.putExtra("selected",selectedItems);
             sendBroadcast(mIntent);
@@ -218,7 +225,6 @@ public class AndroidAutoPlugin
      * Handle configuration request.
      * Perform plugin configuration
      */
-    @Override
     public void performConfigure()
     {
         Intent cfgIntent = new Intent(getApplicationContext(), PluginSettingsActivity.class);
@@ -231,7 +237,6 @@ public class AndroidAutoPlugin
      *
      * @param csvString CSV data string in format key;value
      */
-    @Override
     public void onDataListUpdate(String csvString)
     {
         // append unknown items to list of known items
@@ -262,7 +267,6 @@ public class AndroidAutoPlugin
      * @param key   Key of data change
      * @param value New value of data change
      */
-    @Override
     public void onDataUpdate(String key, String value)
     {
         synchronized (valueMap)

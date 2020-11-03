@@ -252,6 +252,7 @@ public class SettingsActivity
 			int i = 0;
 			for (EcuDataItem currItem : items)
 			{
+				Log.d("settingsAct",currItem.label);
 				titles[i] = currItem.label;
 				keys[i] = currItem.toString();
 				selections.add(currItem.toString());
@@ -260,7 +261,6 @@ public class SettingsActivity
 			// set enries and keys
 			itemList.setEntries(titles);
 			itemList.setEntryValues(keys);
-
 			// if there is no item selected, mark all as selected
 			if (itemList.getValues().size() == 0)
 			{

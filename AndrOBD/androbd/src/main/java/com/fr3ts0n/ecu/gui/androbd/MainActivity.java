@@ -53,6 +53,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fr3ts0n.androbd.plugin.Plugin;
@@ -88,6 +89,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import static com.fr3ts0n.ecu.gui.androbd.SettingsActivity.ELM_TIMING_SELECT;
+import static com.fr3ts0n.ecu.prot.obd.ObdProt.OBD_SVC_DATA;
 
 /**
  * Main Activity for AndrOBD app
@@ -303,6 +305,8 @@ public class MainActivity extends PluginManager
 	 * empty string set as default parameter
 	 */
 	private static final Set<String> emptyStringSet = new HashSet<>();
+	static final String ITEMS_KNOWN = "known_items";
+	protected static HashSet<String> mKnownItems = new HashSet<>();
 
 	private void onCreatePreferenceFragment() {
 		getFragmentManager().beginTransaction()
@@ -318,7 +322,12 @@ public class MainActivity extends PluginManager
 
 		onCreatePreferenceFragment();
 
+		//start the media browser service
+		Intent intent = new Intent(this, MyMediaBrowserService.class);
+		startService(intent);
 
+		Intent anPl = new Intent(this, AndroidAutoPlugin.class);
+		startService(anPl);
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 			WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -363,8 +372,11 @@ public class MainActivity extends PluginManager
 
 		// update all settings from preferences
 		onSharedPreferenceChanged(prefs, null);
+		mKnownItems =
+				(HashSet<String>) prefs.getStringSet(ITEMS_KNOWN, mKnownItems);
 
-        // set up logging system
+
+		// set up logging system
 		setupLoggers();
 
 		// Log program startup
@@ -616,12 +628,13 @@ public class MainActivity extends PluginManager
 				return true;
 			*/
 			case R.id.service_none:
-				setObdService(ObdProt.OBD_SVC_NONE, item.getTitle());
+				setObdService(OBD_SVC_DATA, "OBD Data");
 				return true;
 
 			case R.id.service_data:
-				setObdService(ObdProt.OBD_SVC_DATA, item.getTitle());
+				setObdService(OBD_SVC_DATA, item.getTitle());
 				return true;
+
 
 			case R.id.service_vid_data:
 				setObdService(ObdProt.OBD_SVC_VEH_INFO, item.getTitle());
@@ -892,7 +905,7 @@ public class MainActivity extends PluginManager
 			/* if we are in OBD data mode:
 			 * ->Long click on an item starts the single item dashboard activity
 			 */
-			case ObdProt.OBD_SVC_DATA:
+			case OBD_SVC_DATA:
 				EcuDataPv pv = (EcuDataPv) getListAdapter().getItem(position);
 				/* only numeric values may be shown as graph/dashboard */
 				if (pv.get(EcuDataPv.FID_VALUE) instanceof Number)
@@ -998,7 +1011,7 @@ public class MainActivity extends PluginManager
 						// set OBD data mode to the one selected by input file
 						setObdService(CommService.elm.getService(), getString(R.string.saved_data));
 						// Check if last data selection shall be restored
-						if (obdService == ObdProt.OBD_SVC_DATA)
+						if (obdService == OBD_SVC_DATA)
 						{
 							checkToRestoreLastDataSelection();
 							checkToRestoreLastViewMode();
@@ -1856,7 +1869,7 @@ public class MainActivity extends PluginManager
 			}
 		}
 		// set protocol service
-		CommService.elm.setService(newObdService, (getMode() != MODE.FILE));
+		CommService.elm.setService(OBD_SVC_DATA, (getMode() != MODE.FILE));
 		// show / hide freeze frame selector */
 		Spinner ff_selector = findViewById(R.id.ff_selector);
 		ff_selector.setOnItemSelectedListener(ff_selected);
@@ -1866,7 +1879,7 @@ public class MainActivity extends PluginManager
 		// set corresponding list adapter
 		switch (newObdService)
 		{
-			case ObdProt.OBD_SVC_DATA:
+			case OBD_SVC_DATA:
 				getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 				// no break here
 			case ObdProt.OBD_SVC_FREEZEFRAME:
@@ -2147,7 +2160,7 @@ public class MainActivity extends PluginManager
 					/* if we are in OBD data mode:
 					 * -> Short click on an item starts the readout activity
 					 */
-					if (CommService.elm.getService() == ObdProt.OBD_SVC_DATA)
+					if (CommService.elm.getService() == OBD_SVC_DATA)
 					{
 						if (getListView().getCheckedItemCount() > 0)
 						{
@@ -2158,6 +2171,7 @@ public class MainActivity extends PluginManager
 								dataViewMode == DATA_VIEW_MODE.DASHBOARD
 								? R.layout.dashboard
 								: R.layout.head_up);
+
 							startActivityForResult(intent, REQUEST_GRAPH_DISPLAY_DONE);
 						}
 					}
@@ -2167,7 +2181,7 @@ public class MainActivity extends PluginManager
 					/* if we are in OBD data mode:
 					 * -> Short click on an item starts the readout activity
 					 */
-					if (CommService.elm.getService() == ObdProt.OBD_SVC_DATA)
+					if (CommService.elm.getService() == OBD_SVC_DATA)
 					{
 						if (getListView().getCheckedItemCount() > 0)
 						{
@@ -2251,6 +2265,7 @@ public class MainActivity extends PluginManager
 	@Override
 	public void onDataUpdate(String key, String value)
 	{
+		Log.d("fromMain","hello");
 		log.log(Level.FINE,"PluginData: " + key + "=" + value);
 		// Update value of plugin data item
 		synchronized (mPluginPvs)

@@ -65,6 +65,7 @@ class ObdItemAdapter extends ArrayAdapter<Object>
     static boolean allowDataUpdates = true;
     private final transient SharedPreferences prefs;
 
+    private DBHelper db;
 
     public ObdItemAdapter(Context context, int resource, PvList pvs)
     {
@@ -73,6 +74,7 @@ class ObdItemAdapter extends ArrayAdapter<Object>
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         setPvList(pvs);
+        db=new DBHelper(context);
     }
 
     /**
@@ -243,7 +245,7 @@ class ObdItemAdapter extends ArrayAdapter<Object>
         public void pvChanged(PvChangeEvent event)
         {
             // handle data item updates
-            Log.d("handlercalled","now");
+            Log.d("handler","handling");
             if (allowDataUpdates)
             {
                 IndexedProcessVar pv = (IndexedProcessVar) event.getSource();
@@ -257,8 +259,15 @@ class ObdItemAdapter extends ArrayAdapter<Object>
 
                     }
                 }
-                String values = pv.get(EcuDataPv.FID_MNEMONIC).toString()+" "+event.getValue().toString();
-                Log.d("dtupdates", values);
+
+                try{
+                    String topic = pv.get(EcuDataPv.FID_MNEMONIC).toString();
+                    float value = ((Number)event.getValue()).floatValue();
+                    db.insertValue(topic, value);
+                }catch (Exception e){
+                    Log.d("errorParsing","damn");
+                }
+
                 // send update to plugin handler
                 if (PluginManager.pluginHandler != null)
                 {

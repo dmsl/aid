@@ -4,8 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
@@ -15,10 +17,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.media.MediaBrowserServiceCompat;
 
+import com.fr3ts0n.pvs.PvChangeEvent;
+import com.fr3ts0n.pvs.PvChangeListener;
+import com.fr3ts0n.pvs.PvList;
+
+import java.util.HashSet;
 import java.util.List;
 
+import static java.util.Collections.addAll;
 
-public class MyMediaBrowserService extends MediaBrowserServiceCompat {
+
+public class MyMediaBrowserService extends MediaBrowserServiceCompat
+                                    implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
     private MediaSessionCompat mSession;
@@ -26,6 +36,7 @@ public class MyMediaBrowserService extends MediaBrowserServiceCompat {
     /** Declares that ContentStyle is supported */
     public static final String CONTENT_STYLE_SUPPORTED =
             "android.media.browse.CONTENT_STYLE_SUPPORTED";
+    static SharedPreferences prefs;
 
     /**
      * Bundle extra indicating the presentation hint for playable media items.
@@ -54,10 +65,13 @@ public class MyMediaBrowserService extends MediaBrowserServiceCompat {
 
     public void onCreate(){
         super.onCreate();
-
+        Log.d("mediaservice","started");
         mSession = new MediaSessionCompat(this, "MusicService");
         MediaSessionCompat.Token sessionToken = mSession.getSessionToken();
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // register for later changes
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        Log.d("mediaservice",prefs.getAll().toString());
         setSessionToken(mSession.getSessionToken());
         mReceiver=new MyReceiver();
         IntentFilter filter = new IntentFilter();
@@ -109,6 +123,12 @@ public class MyMediaBrowserService extends MediaBrowserServiceCompat {
         //result.sendResult(ms.getMediaItems());
 
     }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+    }
+
 
 
     // use this as an inner class like here or as a top-level class

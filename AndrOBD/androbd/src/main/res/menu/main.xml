@@ -47,7 +47,7 @@
                 android:title="@string/obd_veh_info"/>
             <item
                 android:id="@+id/service_data"
-                android:title="@string/obd_data"/>
+                android:title="@string/obd_data" />
             <item
                 android:id="@+id/service_codes"
                 android:title="@string/obd_codes"/>

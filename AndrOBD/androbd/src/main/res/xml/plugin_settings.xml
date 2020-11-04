@@ -6,8 +6,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
     <Preference
-        android:title="@string/app_name"
-        android:summary="@string/app_version" />
+        android:layout="@layout/logo_layout" />
 
     <PreferenceCategory
         android:title="@string/plugin_settings">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:tools="http://schemas.android.com/tools"
-    package="com.fr3ts0n.ecu.gui.androbd"
+    package="com.ucy.ecu.gui.aid"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- start/stop bluetooth adapter -->
@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:fullBackupContent">
         <activity
-            android:name=".MainActivity"
+            android:name="com.ucy.ecu.gui.aid.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             >
@@ -47,36 +47,36 @@
                 android:resource="@xml/device_filter"/>
         </activity>
         <activity
-            android:name=".UsbDeviceListActivity"
+            android:name="com.ucy.ecu.gui.aid.UsbDeviceListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Holo.Dialog"
             />
         <activity
-            android:name=".BtDeviceListActivity"
+            android:name="com.ucy.ecu.gui.aid.BtDeviceListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Holo.Dialog"
             />
         <activity
-            android:name=".ChartActivity"
+            android:name="com.ucy.ecu.gui.aid.ChartActivity"
             android:configChanges="touchscreen|orientation|screenSize"
             android:label="@string/chart"
             android:theme="@style/AppTheme.Dark"
             />
         <activity
-            android:name=".DashBoardActivity"
+            android:name="com.ucy.ecu.gui.aid.DashBoardActivity"
             android:configChanges="touchscreen|orientation|screenSize"
             android:label="@string/dashboard"
             android:theme="@style/AppTheme.Dark"
             />
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.ucy.ecu.gui.aid.SettingsActivity"
             android:configChanges="touchscreen|orientation|screenSize"
             android:label="@string/settings"
             android:theme="@style/AppTheme.Dark"
             />
-        <activity android:name=".PluginSettingsActivity"
+        <activity android:name="com.ucy.ecu.gui.aid.PluginSettingsActivity"
             android:label="Android Auto Plugin">
             <intent-filter>
                 <action android:name="com.fr3ts0n.androbd.plugin.CONFIGURE" />
@@ -85,7 +85,7 @@
         </activity>
 
 
-        <receiver android:name="PluginReceiver"
+        <receiver android:name="com.ucy.ecu.gui.aid.PluginReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>
@@ -95,12 +95,12 @@
         </receiver>
 
         <service
-            android:name=".AndroidAutoPlugin"
+            android:name="com.ucy.ecu.gui.aid.AndroidAutoPlugin"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".MyMediaBrowserService"
+            android:name="com.ucy.ecu.gui.aid.MyMediaBrowserService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

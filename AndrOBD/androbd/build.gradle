@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId 'com.fr3ts0n.ecu.gui.androbd'
-        minSdkVersion 17
+        applicationId 'com.ucy.ecu.gui.aid'
+        minSdkVersion 23
         // SDK 25 to allow background service mechanism for plugins
         targetSdkVersion 29
-        versionCode 20202
-        versionName 'V2.2.2'
+        versionCode 1
+        versionName 'V1'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:title="@string/app_name"
-        android:summary="@string/app_version" />
+        android:layout_marginTop="20dp"
+        android:layout="@layout/logo_layout" />
+
 
     <PreferenceCategory
         android:key="plugin_settings"
@@ -18,7 +18,7 @@
         <EditTextPreference
             android:defaultValue="30"
             android:key="update_period"
-            android:numeric="integer"
+            android:inputType="number"
             android:summary="@string/update_period_sum"
             android:title="@string/update_period"/>
 

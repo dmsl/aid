@@ -62,7 +62,7 @@ public class PluginHandler
             if (Plugin.IDENTIFY.equals(action))
             {
                 PluginInfo plugin = new PluginInfo(intent.getExtras());
-                Log.i(toString(), "Plugin identified: " + plugin.toString());
+//                Log.i(toString(), "Plugin identified: " + plugin.toString());
                 // get preferred enable/disable state from settings
                 plugin.enabled = mPrefs.getBoolean(plugin.className, true);
                 // add plugin to list
@@ -274,7 +274,7 @@ public class PluginHandler
         Intent intent = new Intent(Plugin.IDENTIFY);
         intent.addCategory(Plugin.REQUEST);
         intent.putExtras(svc.getPluginInfo().toBundle());
-        Log.i(toString(), ">IDENTIFY: " + intent);
+//        Log.i(toString(), ">IDENTIFY: " + intent);
         getContext().sendBroadcast(intent);
     }
 
@@ -288,7 +288,7 @@ public class PluginHandler
         Intent intent = new Intent();
         PluginInfo plugin = getItem(position);
         intent.setClassName(plugin.packageName, plugin.className);
-        Log.i(toString(), "Stop service: " + intent);
+//        Log.i(toString(), "Stop service: " + intent);
         getContext().stopService(intent);
     }
 
@@ -308,7 +308,7 @@ public class PluginHandler
             Intent intent = new Intent(Plugin.ACTION);
             intent.setClassName(plugin.packageName, plugin.className);
             intent.putExtra(PluginInfo.Field.CLASS.toString(), plugin.className);
-            Log.d(toString(), ">ACTION: " + intent);
+//            Log.d(toString(), ">ACTION: " + intent);
             getContext().startService(intent);
         }
     }
@@ -329,7 +329,7 @@ public class PluginHandler
             Intent intent = new Intent(Plugin.CONFIGURE);
             intent.setClassName(plugin.packageName, plugin.className);
             intent.putExtra(PluginInfo.Field.CLASS.toString(), plugin.className);
-            Log.d(toString(), ">CONFIGURE: " + intent);
+//            Log.d(toString(), ">CONFIGURE: " + intent);
             getContext().startService(intent);
         }
     }
@@ -357,7 +357,7 @@ public class PluginHandler
                     && (plugin.features & PluginInfo.FEATURE_DATA) != 0)
             {
                 intent.setClassName(plugin.packageName, plugin.className);
-                Log.v(toString(), ">DATALIST: " + intent);
+//                Log.v(toString(), ">DATALIST: " + intent);
                 getContext().startService(intent);
             }
         }
@@ -385,7 +385,7 @@ public class PluginHandler
                     && (plugin.features & PluginInfo.FEATURE_DATA) != 0)
             {
                 intent.setClassName(plugin.packageName, plugin.className);
-                Log.v(toString(), ">DATA: " + intent);
+//                Log.v(toString(), ">DATA: " + intent);
                 getContext().startService(intent);
             }
         }

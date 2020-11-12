@@ -321,7 +321,7 @@ public class MainActivity extends PluginManager
 		super.onCreate(savedInstanceState);
 
 		onCreatePreferenceFragment();
-
+		DBHelper db = new DBHelper(this);
 		//start the media browser service
 		Intent intent = new Intent(this, MyMediaBrowserService.class);
 		startService(intent);
@@ -490,13 +490,13 @@ public class MainActivity extends PluginManager
 			mBluetoothAdapter.disable();
 		}
 
-		log.info(String.format("%s %s finished",
-			getString(R.string.app_name),
-			getString(R.string.app_version)));
+//		log.info(String.format("%s %s finished",
+//			getString(R.string.app_name),
+//			getString(R.string.app_version)));
 
 		/* remove log file handler */
 //		logFileHandler.close();
-		Logger.getLogger("").removeHandler(logFileHandler);
+		//Logger.getLogger("").removeHandler(logFileHandler);
 
 		super.onDestroy();
 	}
@@ -806,9 +806,9 @@ public class MainActivity extends PluginManager
 		if (key == null || SettingsActivity.KEY_PROT_SELECT.equals(key))
 		{ ElmProt.setPreferredProtocol(getPrefsInt(SettingsActivity.KEY_PROT_SELECT, 0)); }
 
-		// log levels
-		if (key == null || LOG_MASTER.equals(key))
-		{ setLogLevels(); }
+//		// log levels
+//		if (key == null || LOG_MASTER.equals(key))
+//		{ setLogLevels(); }
 
 		// update from protocol extensions
 		if (key == null || key.startsWith("ext_file-"))
@@ -902,13 +902,13 @@ public class MainActivity extends PluginManager
 				PropertyChangeEvent evt;
 
 				// log trace message for received handler notification event
-				log.log(Level.FINEST, String.format("Handler notification: %s", msg.toString()));
+				//log.log(Level.FINEST, String.format("Handler notification: %s", msg.toString()));
 
 				switch (msg.what)
 				{
 					case MESSAGE_STATE_CHANGE:
 						// log trace message for received handler notification event
-						log.log(Level.FINEST, String.format("State change: %s", msg.toString()));
+					//	log.log(Level.FINEST, String.format("State change: %s", msg.toString()));
 						switch ((CommService.STATE) msg.obj)
 						{
 							case CONNECTED:
@@ -979,7 +979,7 @@ public class MainActivity extends PluginManager
 								}
 								catch (Exception e)
 								{
-									log.log(Level.FINER, "Error adding PV", e);
+									//log.log(Level.FINER, "Error adding PV", e);
 								}
 								break;
 
@@ -1068,7 +1068,7 @@ public class MainActivity extends PluginManager
 					case MESSAGE_TOOLBAR_VISIBLE:
 						Boolean visible = (Boolean) msg.obj;
 						// log action
-						log.fine(String.format("ActionBar: %s", visible ? "show" : "hide"));
+						//log.fine(String.format("ActionBar: %s", visible ? "show" : "hide"));
 						// set action bar visibility
 						ActionBar ab = getActionBar();
 						if (ab != null)
@@ -1087,7 +1087,7 @@ public class MainActivity extends PluginManager
 			}
 			catch (Exception ex)
 			{
-				log.log(Level.SEVERE, "Error in mHandler", ex);
+				//log.log(Level.SEVERE, "Error in mHandler", ex);
 			}
 		}
 	};
@@ -1124,8 +1124,8 @@ public class MainActivity extends PluginManager
 					// if items could not be applied
 					// remove invalid preselection
 					prefs.edit().remove(PRESELECT.LAST_ITEMS.toString()).apply();
-					log.warning(String.format("Invalid preselection: %s",
-						Arrays.toString(lastSelectedItems)));
+//					log.warning(String.format("Invalid preselection: %s",
+//						Arrays.toString(lastSelectedItems)));
 				}
 			}
 		}
@@ -1171,7 +1171,7 @@ public class MainActivity extends PluginManager
 		}
 		catch(Exception ex)
 		{
-			log.severe(ex.toString());
+//			log.severe(ex.toString());
 		}
 		return result;
 	}
@@ -1381,7 +1381,7 @@ public class MainActivity extends PluginManager
 		catch (Exception ex)
 		{
 			// log error message
-			log.severe(String.format("Preference '%s'(%d): %s", key, result, ex.toString()));
+//			log.severe(String.format("Preference '%s'(%d): %s", key, result, ex.toString()));
 		}
 
 		return result;
@@ -1522,7 +1522,7 @@ public class MainActivity extends PluginManager
 	 */
 	private void setConversionSystem(int cnvId)
 	{
-		log.info("Conversion: " + getResources().getStringArray(R.array.measure_options)[cnvId]);
+//		log.info("Conversion: " + getResources().getStringArray(R.array.measure_options)[cnvId]);
 		if (EcuDataItem.cnvSystem != cnvId)
 		{
 			// set coversion system
@@ -1608,7 +1608,7 @@ public class MainActivity extends PluginManager
 			String filePath = prefs.getString(SettingsActivity.extKeys[0], null);
 			if (filePath != null)
 			{
-				log.info("Load ext. conversions: " + filePath);
+//				log.info("Load ext. conversions: " + filePath);
 				Uri uri = Uri.parse(filePath);
 				InputStream inStr = getContentResolver().openInputStream(uri);
 				EcuDataItems.cnv.loadFromStream(inStr);
@@ -1616,7 +1616,7 @@ public class MainActivity extends PluginManager
 		}
 		catch (Exception e)
 		{
-			log.log(Level.SEVERE, "Load ext. conversions: ", e);
+//			log.log(Level.SEVERE, "Load ext. conversions: ", e);
 			e.printStackTrace();
 			errors += e.getLocalizedMessage() + "\n";
 		}
@@ -1627,7 +1627,7 @@ public class MainActivity extends PluginManager
 			String filePath = prefs.getString(SettingsActivity.extKeys[1], null);
 			if (filePath != null)
 			{
-				log.info("Load ext. conversions: " + filePath);
+//				log.info("Load ext. conversions: " + filePath);
 				Uri uri = Uri.parse(filePath);
 				InputStream inStr = getContentResolver().openInputStream(uri);
 				ObdProt.dataItems.loadFromStream(inStr);
@@ -1635,7 +1635,7 @@ public class MainActivity extends PluginManager
 		}
 		catch (Exception e)
 		{
-			log.log(Level.SEVERE, "Load ext. PIDs: ", e);
+//			log.log(Level.SEVERE, "Load ext. PIDs: ", e);
 			e.printStackTrace();
 			errors += e.getLocalizedMessage() + "\n";
 		}
@@ -2069,7 +2069,7 @@ public class MainActivity extends PluginManager
 		// if this is a real change ...
 		if (dataViewMode != this.dataViewMode)
 		{
-			log.info(String.format("Set view mode: %s -> %s", this.dataViewMode, dataViewMode));
+//			log.info(String.format("Set view mode: %s -> %s", this.dataViewMode, dataViewMode));
 
 			switch (dataViewMode)
 			{
@@ -2153,7 +2153,7 @@ public class MainActivity extends PluginManager
 	@Override
 	public void onDataListUpdate(String csvString)
 	{
-		log.log(Level.FINE,"PluginDataList: " + csvString);
+//		log.log(Level.FINE,"PluginDataList: " + csvString);
 		// append unknown items to list of known items
 		synchronized (mPluginPvs)
 		{
@@ -2193,8 +2193,7 @@ public class MainActivity extends PluginManager
 	@Override
 	public void onDataUpdate(String key, String value)
 	{
-		Log.d("fromMain","hello");
-		log.log(Level.FINE,"PluginData: " + key + "=" + value);
+//		log.log(Level.FINE,"PluginData: " + key + "=" + value);
 		// Update value of plugin data item
 		synchronized (mPluginPvs)
 		{

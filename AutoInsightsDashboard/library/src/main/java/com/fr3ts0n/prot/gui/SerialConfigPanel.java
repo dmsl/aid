@@ -402,7 +402,7 @@ public class SerialConfigPanel
 			} catch (Exception e)
 			{
 				newPort = null;
-				Logger.getLogger(getClass()).warn(e.getMessage());
+//				Logger.getLogger(getClass()).warn(e.getMessage());
 			}
 
 			setPort(newPort);

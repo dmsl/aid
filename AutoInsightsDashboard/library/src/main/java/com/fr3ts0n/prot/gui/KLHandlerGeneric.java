@@ -28,8 +28,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
@@ -98,7 +98,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-			log.warning("CommTimeout");
+//			log.warning("CommTimeout");
 			close();
 			setProtStat(ProtStatus.TIMEOUT);
 		}
@@ -110,7 +110,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 	public KLHandlerGeneric()
 	{
 		// set the logger object
-		log = Logger.getLogger("com.fr3ts0n.prot.kl");
+//		log = Logger.getLogger("com.fr3ts0n.prot.kl");
 
 		commTimer = new Timer(commTimeoutTime, commTimeoutHandler);
 		commTimer.setInitialDelay(commTimeoutTime);
@@ -129,7 +129,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			setDeviceName(device);
 		} catch (Exception ex)
 		{
-			log.log(Level.SEVERE,"", ex);
+//			log.log(Level.SEVERE,"", ex);
 		}
 		commTimer = new Timer(commTimeoutTime, commTimeoutHandler);
 		commTimer.setInitialDelay(commTimeoutTime);
@@ -208,18 +208,18 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			SerialExt.setCustomBaudrate(newBaudRate);
 		} catch (Exception e)
 		{
-			log.log(Level.SEVERE,"Set custom baudrate", e);
+//			log.log(Level.SEVERE,"Set custom baudrate", e);
 		}
 
 		// show baudrate setting as debug output
 		try
 		{
-			log.fine(String.format("Baudrate:%d/%d",
-				SerialExt.getCustomBaudrate(),
-				newBaudRate));
+//			log.fine(String.format("Baudrate:%d/%d",
+//				SerialExt.getCustomBaudrate(),
+//				newBaudRate));
 		} catch (Exception e)
 		{
-			log.log(Level.SEVERE,null, e);
+//			log.log(Level.SEVERE,null, e);
 		}
 		// calculate new interByteTime (1M ns *numBits / bps)
 		interByteTime = 1000000000 * numBitsPause / newBaudRate;
@@ -243,7 +243,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			Thread.sleep(200);
 		} catch (InterruptedException e)
 		{
-			log.log(Level.SEVERE,null, e);
+//			log.log(Level.SEVERE,null, e);
 		}
 	}
 
@@ -273,7 +273,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 		sendBit5Baud(true);
 		// finish sending
 		// device.setDTR(true);
-		log.fine(String.format("TX-5Baud:%02X finished after %dms", address, System.currentTimeMillis() - start));
+//		log.fine(String.format("TX-5Baud:%02X finished after %dms", address, System.currentTimeMillis() - start));
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 	{
 		try
 		{
-			log.fine("TX:" + String.format("%02X", (byte) txByte));
+//			log.fine("TX:" + String.format("%02X", (byte) txByte));
 
 			// if this byte should be remembered as TX byte, do it
 			if (rememberTx)
@@ -314,7 +314,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			pktStat = PacketStatus.ECHO;
 		} catch (Exception ex)
 		{
-			log.log(Level.SEVERE,this.toString(), ex);
+//			log.log(Level.SEVERE,this.toString(), ex);
 		}
 	}
 
@@ -339,14 +339,14 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 		public void run()
 		{
 			int chr;
-			log.fine("Reader Thread started");
+//			log.fine("Reader Thread started");
 			while (getProtStat() != ProtStatus.OFFLINE && getProtStat() != ProtStatus.TIMEOUT)
 			{
 				try
 				{
 					chr = SerialExt.receiveChar();
-					log.fine(String.format("RX:%02X : %c\t%s\t%s", chr, chr < 32 || chr > 127 ? '.' : chr,
-						getProtStat(), pktStat));
+//					log.fine(String.format("RX:%02X : %c\t%s\t%s", chr, chr < 32 || chr > 127 ? '.' : chr,
+//						getProtStat(), pktStat));
 					switch (getProtStat())
 					{
 						case RECEIVING:
@@ -376,7 +376,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 										//
 										// package is complete
 										//
-										log.fine("RX:" + ProtUtils.hexDumpBuffer(message.toCharArray()));
+//										log.fine("RX:" + ProtUtils.hexDumpBuffer(message.toCharArray()));
 										// update block counter with the received one
 										blockCounter = message.charAt(1);
 										// notify protocol handler of the new package
@@ -418,7 +418,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 										sendNextByte();
 									} else
 									{
-										log.log(Level.SEVERE,String.format("Wrong complement:%02X, expected:%02X", chr, ~lastTxChar));
+//										log.log(Level.SEVERE,String.format("Wrong complement:%02X, expected:%02X", chr, ~lastTxChar));
 										// TODO: handle communication error
 									}
 									break;
@@ -458,17 +458,17 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 					}
 				} catch (Exception ex)
 				{
-					log.log(Level.SEVERE,ex.toString());
+//					log.log(Level.SEVERE,ex.toString());
 					try
 					{
 						sleep(0);
 					} catch (InterruptedException ex1)
 					{
-						log.log(Level.SEVERE,ex1.toString());
+//						log.log(Level.SEVERE,ex1.toString());
 					}
 				}
 			}
-			log.warning("Reader Tread finished");
+//			log.warning("Reader Tread finished");
 		}
 	}
 	
@@ -513,7 +513,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			Thread.sleep(500);
 		} catch (Exception e)
 		{
-			log.log(Level.SEVERE,e.getMessage());
+//			log.log(Level.SEVERE,e.getMessage());
 		}
 		new RxThread().start();
 	}
@@ -533,12 +533,12 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			long tDiff = interByteTime - ((System.currentTimeMillis() - lastRxTime) * 1000000000);
 			if (tDiff > 0)
 			{
-				log.fine("TX: waiting " + tDiff + " ns");
+//				log.fine("TX: waiting " + tDiff + " ns");
 				Thread.sleep(tDiff / 1000000L, (int) (tDiff % 1000000L));
 			}
 		} catch (InterruptedException ex)
 		{
-			log.log(Level.SEVERE,"wait: " + ex.toString());
+//			log.log(Level.SEVERE,"wait: " + ex.toString());
 		}
 
 		// if we have to dequeue a new telegram ...
@@ -612,7 +612,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			// if necessary, adjust block counter
 			if (currTxTgm[1] != (blockCounter + 1))
 			{
-				log.info(String.format("MsgCounter adjusted:%02x->%02x", (int) currTxTgm[1], (int) blockCounter + 1));
+//				log.info(String.format("MsgCounter adjusted:%02x->%02x", (int) currTxTgm[1], (int) blockCounter + 1));
 				currTxTgm[1] = ++blockCounter;
 			}
 			// ... and set byte pointer to start of telegram
@@ -650,7 +650,7 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			for (int i = 0; i < baudRates.length; i++)
 			{
 				setProtStat(ProtStatus.CONNECTING);
-				log.info(String.format("Init Device:%s Address:%02x, Speed:%d", deviceName, address, baudRates[i]));
+//				log.info(String.format("Init Device:%s Address:%02x, Speed:%d", deviceName, address, baudRates[i]));
 				// set communication baud rate
 				setCustomBaudRate(baudRates[i]);
 				// remember current baud rate
@@ -662,12 +662,12 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 					Thread.sleep(500);
 				} catch (InterruptedException e)
 				{
-					log.log(Level.SEVERE,"Sleep", e);
+//					log.log(Level.SEVERE,"Sleep", e);
 				}
 				// if we received an answer, we are not initializing any more
 				if (getProtStat() != ProtStatus.CONNECTING)
 				{
-					log.info(String.format("Init OK Device:%s Address:%02x, Speed:%d", deviceName, address, baudRates[i]));
+//					log.info(String.format("Init OK Device:%s Address:%02x, Speed:%d", deviceName, address, baudRates[i]));
 					// set return value
 					result = getCurrBaudRate();
 					// start communication timer
@@ -677,12 +677,12 @@ public class KLHandlerGeneric extends SerialHandlerGeneric
 			}
 			if (result == 0)
 			{
-				log.warning(String.format("Init Timeout Device:%s Address:%02x", deviceName, address));
+//				log.warning(String.format("Init Timeout Device:%s Address:%02x", deviceName, address));
 				close();
 			}
 		} catch (Exception ex)
 		{
-			log.log(Level.SEVERE,deviceName + ": " + ex.toString());
+//			log.log(Level.SEVERE,deviceName + ": " + ex.toString());
 			close();
 			setProtStat(ProtStatus.ERROR);
 			result = 0;

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 /**
  * Diagnostic data conversions
@@ -59,7 +59,7 @@ public class EcuConversions extends HashMap<String, Conversion[]>
 	private static final int FLD_PARAMETERS = 10;
 
 	// the data logger
-	private static final Logger log = Logger.getLogger("data.cnv");
+//	private static final Logger log = Logger.getLogger("data.cnv");
 
 	/** DEFAULT type conversion */
 	public static final NumericConversion dfltCnv = new IntConversion();
@@ -177,7 +177,7 @@ public class EcuConversions extends HashMap<String, Conversion[]>
 					for (int i = 0; i < EcuDataItem.SYSTEM_TYPES; i++)
 					{
 						currCnvSet[i] = newCnv;
-						log.finer("+" + params[FLD_NAME] + "/" + params[FLD_SYSTEM] + " - " + String.valueOf(newCnv));
+//						log.finer("+" + params[FLD_NAME] + "/" + params[FLD_SYSTEM] + " - " + String.valueOf(newCnv));
 					}
 				} else
 				{
@@ -187,7 +187,7 @@ public class EcuConversions extends HashMap<String, Conversion[]>
 						if (EcuDataItem.cnvSystems[i].equals(params[FLD_SYSTEM]))
 						{
 							currCnvSet[i] = newCnv;
-							log.finer("+" + params[FLD_NAME] + "/" + params[FLD_SYSTEM] + " - " + newCnv.toString());
+//							log.finer("+" + params[FLD_NAME] + "/" + params[FLD_SYSTEM] + " - " + newCnv.toString());
 						}
 					}
 				}

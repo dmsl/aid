@@ -250,9 +250,9 @@ public class ElmProt
 				this.enabled = enabled;
 			}
 			// log current state
-			log.fine(String.format("ELM command '%s' -> %s",
-				toString(),
-				this.enabled ? "enabled" : "disabled"));
+//			log.fine(String.format("ELM command '%s' -> %s",
+//				toString(),
+//				this.enabled ? "enabled" : "disabled"));
 		}
 		
 		public boolean isDisablingAllowed()
@@ -319,9 +319,9 @@ public class ElmProt
 		public void setMode(AdaptTimingMode mode)
 		{
 			
-			log.info(String.format("AdaptiveTiming mode: %s -> %s",
-				this.mode.toString(),
-				mode.toString()));
+//			log.info(String.format("AdaptiveTiming mode: %s -> %s",
+//				this.mode.toString(),
+//				mode.toString()));
 			this.mode = mode;
 			// initialize with new mode
 			initialize();
@@ -344,8 +344,8 @@ public class ElmProt
 		 */
 		public void setElmTimeoutMin(int elmTimeoutMin)
 		{
-			log.info(String.format("ELM min timeout: %d -> %d",
-				ELM_TIMEOUT_MIN, elmTimeoutMin));
+//			log.info(String.format("ELM min timeout: %d -> %d",
+//				ELM_TIMEOUT_MIN, elmTimeoutMin));
 			ELM_TIMEOUT_MIN = elmTimeoutMin;
 		}
 		
@@ -416,8 +416,8 @@ public class ElmProt
 		 */
 		private void setElmTimeoutLrnLow(int elmTimeoutLrnLow)
 		{
-			log.info(String.format("ELM learn timeout: %d -> %d",
-				ELM_TIMEOUT_LRN_LOW, elmTimeoutLrnLow));
+//			log.info(String.format("ELM learn timeout: %d -> %d",
+//				ELM_TIMEOUT_LRN_LOW, elmTimeoutLrnLow));
 			ELM_TIMEOUT_LRN_LOW = elmTimeoutLrnLow;
 		}
 		
@@ -432,7 +432,7 @@ public class ElmProt
 		{
 			if (newTimeout > 0 && newTimeout != elmMsgTimeout)
 			{
-				log.info("ELM Timeout: " + elmMsgTimeout + " -> " + newTimeout);
+//				log.info("ELM Timeout: " + elmMsgTimeout + " -> " + newTimeout);
 				// set the timeout variable
 				elmMsgTimeout = newTimeout;
 				// queue the new timeout message
@@ -456,7 +456,7 @@ public class ElmProt
 	public static void setPreferredProtocol(int protoIndex)
 	{
 		preferredProtocol = PROT.values()[protoIndex];
-		log.info("Preferred protocol: " + preferredProtocol);
+//		log.info("Preferred protocol: " + preferredProtocol);
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class ElmProt
 	 */
 	public void setEcuAddress(int ecuAddress)
 	{
-		log.info(String.format("Set ECU address: 0x%x", ecuAddress));
+//		log.info(String.format("Set ECU address: 0x%x", ecuAddress));
 		selectedEcuAddress = ecuAddress;
 		// ensure headers are off
 		pushCommand(CMD.SETHEADER, 0);
@@ -541,7 +541,7 @@ public class ElmProt
 	@Override
 	public void sendTelegram(char[] buffer)
 	{
-		log.fine(this.toString() + " TX:'" + String.valueOf(buffer) + "'");
+//		log.fine(this.toString() + " TX:'" + String.valueOf(buffer) + "'");
 		lastCommand = buffer;
 		super.sendTelegram(buffer);
 	}
@@ -652,7 +652,7 @@ public class ElmProt
 		int result = 0;
 		String bufferStr = new String(buffer);
 		
-		log.fine(this.toString() + " RX:'" + bufferStr + "'");
+//		log.fine(this.toString() + " RX:'" + bufferStr + "'");
 		
 		// empty result
 		if (buffer.length == 0)
@@ -668,7 +668,7 @@ public class ElmProt
 		}
 		
 		// log message reception as answer to last TX message
-		log.fine("ELM rx:'" + bufferStr + "' (" + lastTxMsg + ")");
+//		log.fine("ELM rx:'" + bufferStr + "' (" + lastTxMsg + ")");
 		
 		// handle response
 		switch (getResponseId(bufferStr))
@@ -883,7 +883,7 @@ public class ElmProt
 							// extract address
 							String address = bufferStr.substring(adrStart, adrStart + adrLen);
 							
-							log.fine(String.format("Found ECU address: 0x%s", address));
+//							log.fine(String.format("Found ECU address: 0x%s", address));
 							// and add to list of addresses
 							ecuAddresses.add(Integer.valueOf(address, 16));
 						}
@@ -1002,7 +1002,7 @@ public class ElmProt
 		Integer pid;
 		runDemo = true;
 		
-		log.info("ELM DEMO thread started");
+//		log.info("ELM DEMO thread started");
 		while (runDemo)
 		{
 			try
@@ -1139,10 +1139,10 @@ public class ElmProt
 			}
 			catch (Exception ex)
 			{
-				log.severe(ex.getLocalizedMessage());
+//				log.severe(ex.getLocalizedMessage());
 			}
 		}
-		log.info("ELM DEMO thread finished");
+//		log.info("ELM DEMO thread finished");
 	}
 	
 	/**
@@ -1173,7 +1173,7 @@ public class ElmProt
 		// log the change in service
 		if (service != this.service)
 		{
-			log.info("OBD Service: " + this.service + "->" + service);
+//			log.info("OBD Service: " + this.service + "->" + service);
 			this.service = service;
 			
 			// send corresponding command(s)
@@ -1225,7 +1225,7 @@ public class ElmProt
 		this.status = status;
 		if (status != oldStatus)
 		{
-			log.info("Status change: " + oldStatus + "->" + status);
+//			log.info("Status change: " + oldStatus + "->" + status);
 			// ECUs detected -> send identified ECU addresses
 			if (status == STAT.ECU_DETECTED)
 			{

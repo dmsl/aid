@@ -31,8 +31,8 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 /**
  * @author erwin
@@ -47,7 +47,7 @@ public class SerialHandlerGeneric extends Thread
 	/** file descriptor of serial device */
 	private long serialDeviceDescriptor = -1;
 	// the logger object
-	static Logger log = Logger.getLogger("com.fr3ts0n.prot.ser");
+//	static Logger log = Logger.getLogger("com.fr3ts0n.prot.ser");
 
 	/**
 	 * Status of protocol handler - to determine if we currently send / receive
@@ -110,7 +110,7 @@ public class SerialHandlerGeneric extends Thread
 			setDeviceName(device);
 		} catch (IOException ex)
 		{
-			log.log(Level.SEVERE,"SerialHandlerGeneric", ex);
+//			log.log(Level.SEVERE,"SerialHandlerGeneric", ex);
 		}
 	}
 
@@ -220,7 +220,7 @@ public class SerialHandlerGeneric extends Thread
 			result = dscrField.getLong(dscr);
 		} catch (Exception ex)
 		{
-			log.log(Level.SEVERE,"getFD", ex);
+//			log.log(Level.SEVERE,"getFD", ex);
 		}
 		return result;
 	}
@@ -306,8 +306,8 @@ public class SerialHandlerGeneric extends Thread
 	 */
 	public void configure()
 	{
-		log.info("Generic Serial ports have to be configured by the\n"
-			+ "operating system (via startup script)");
+//		log.info("Generic Serial ports have to be configured by the\n"
+//			+ "operating system (via startup script)");
 	}
 
 	/**

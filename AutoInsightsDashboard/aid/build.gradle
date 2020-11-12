@@ -6,7 +6,6 @@ android {
     defaultConfig {
         applicationId 'com.ucy.ecu.gui.aid'
         minSdkVersion 23
-        // SDK 25 to allow background service mechanism for plugins
         targetSdkVersion 30
         versionCode 1
         versionName 'V1'

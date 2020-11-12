@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import android.os.IBinder;
-import android.util.Log;
 
 import com.fr3ts0n.androbd.plugin.PluginInfo;
 
@@ -93,7 +92,6 @@ public class AndroidAutoPlugin extends Service implements
             {
                 while (!interrupted())
                 {
-                    Log.d("pluginthread","hello i am here, sending in " + update_period);
                     sleep(update_period * 1000);
                     performAction();
                 }
@@ -205,7 +203,6 @@ public class AndroidAutoPlugin extends Service implements
 //            }
 //        }
         if(true) {
-            Log.d("update","sending broadcast");
             String[] selectedItems = new String[mSelectedItems.size()];
             mSelectedItems.toArray(selectedItems);
             Intent mIntent = new Intent("RefChild");

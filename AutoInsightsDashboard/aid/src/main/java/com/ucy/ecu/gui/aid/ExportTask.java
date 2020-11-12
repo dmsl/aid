@@ -39,8 +39,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.SortedMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Builds the CSV dump for sharing.
@@ -64,7 +62,6 @@ class ExportTask extends AsyncTask<XYMultipleSeriesDataset, Integer, String>
 	private static boolean CSV_TEXT_QUOTED = false;
 
 	private static final String TAG = ExportTask.class.getSimpleName();
-	private static final Logger log = Logger.getLogger(TAG);
 	
 	private final SharedPreferences prefs;
 
@@ -180,7 +177,6 @@ class ExportTask extends AsyncTask<XYMultipleSeriesDataset, Integer, String>
 		String msg = String.format("CSV %s to %s",
 								   activity.getString(R.string.saved),
 								   fileName);
-		log.log(Level.INFO, msg);
 		Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
 
 		// if export file should be sent immediately ...

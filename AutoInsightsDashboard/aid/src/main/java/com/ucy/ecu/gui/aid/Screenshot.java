@@ -30,8 +30,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Create a screenshot and save it to sd-card
@@ -39,7 +37,6 @@ import java.util.logging.Logger;
  */
 class Screenshot
 {
-	private static final Logger log = Logger.getLogger(Screenshot.class.getSimpleName());
 	
 	/**
 	 * Take a screenshot of selected view in selected context and save on external
@@ -67,16 +64,13 @@ class Screenshot
 			bitmap.compress(Bitmap.CompressFormat.PNG, 90, fout);
 			// show notification
 			Toast.makeText(context, "Screenshot saved: " + mPath, Toast.LENGTH_SHORT).show();
-			log.info("Screenshot saved: " + mPath);
 
 			fout.flush();
 			fout.close();
 		} catch (FileNotFoundException e)
 		{
-			log.log(Level.SEVERE, "ScreenShot", e);
 		} catch (IOException e)
 		{
-			log.log(Level.SEVERE, "ScreenShot", e);
 		}
 	}
 

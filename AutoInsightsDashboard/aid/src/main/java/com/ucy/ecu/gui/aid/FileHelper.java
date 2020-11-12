@@ -38,8 +38,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Task to save measurements
@@ -53,7 +51,6 @@ class FileHelper
 	private static final SimpleDateFormat dateFmt = new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss");
 	private static ProgressDialog progress;
 
-	private static final Logger log = Logger.getLogger(FileHelper.class.getName());
 	
 	private final Context context;
 	private final ElmProt elm;
@@ -160,7 +157,6 @@ class FileHelper
 				context.getString(R.string.saved),
 				outFile.length(),
 				mPath);
-			log.info(msg);
 			Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 		} catch (Exception e)
 		{
@@ -231,12 +227,10 @@ class FileHelper
 
 			oIn.close();
 
-			log.log(Level.INFO, msg);
 			Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 		} catch (Exception ex)
 		{
 			Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show();
-			log.log(Level.SEVERE, uri.toString(), ex);
 		}
 		return numBytesLoaded;
 	}

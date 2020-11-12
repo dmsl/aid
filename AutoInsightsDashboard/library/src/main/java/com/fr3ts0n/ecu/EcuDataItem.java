@@ -21,7 +21,7 @@ package com.fr3ts0n.ecu;
 import com.fr3ts0n.prot.ProtUtils;
 import com.fr3ts0n.prot.ProtoHeader;
 
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 /**
  * Definition of a single ECU Data item (EcuDataItem)
@@ -60,7 +60,7 @@ public class EcuDataItem
 	private int currErrorCount = 0;     ///< current number of consecutive conversion errors
 
 	// Logger object
-	private static final Logger log = Logger.getLogger("data.ecu");
+//	private static final Logger log = Logger.getLogger("data.ecu");
 
 	public static int[] byteValues =
 	{
@@ -182,7 +182,7 @@ public class EcuDataItem
 		} catch(Exception ex)
 		{
 			result = "n/a";
-			log.warning(String.format("%s: %s - [%s]", toString(), ex.getMessage(), ProtUtils.hexDumpBuffer(buffer)));
+//			log.warning(String.format("%s: %s - [%s]", toString(), ex.getMessage(), ProtUtils.hexDumpBuffer(buffer)));
 
             // increment error counter
             currErrorCount = Math.min(MAX_ERROR_COUNT, currErrorCount +1);
@@ -206,23 +206,23 @@ public class EcuDataItem
 			if(currErrorCount < MAX_ERROR_COUNT)
 			{
 				pv.put(EcuDataPv.FID_VALUE, result);
-				log.fine(String.format("%02X %-30s %16s %s",
-										pid,
-										label,
-										pv.get(EcuDataPv.FID_VALUE),
-										pv.get(EcuDataPv.FID_UNITS)));
+//				log.fine(String.format("%02X %-30s %16s %s",
+//										pid,
+//										label,
+//										pv.get(EcuDataPv.FID_VALUE),
+//										pv.get(EcuDataPv.FID_UNITS)));
 			}
 			else
 			{
-				log.warning(String.format("Item disabled: %s (%d/%d)",
-										  toString(),
-										  currErrorCount,
-										  MAX_ERROR_COUNT));
+//				log.warning(String.format("Item disabled: %s (%d/%d)",
+//										  toString(),
+//										  currErrorCount,
+//										  MAX_ERROR_COUNT));
 			}
 		}
 		catch(Exception ex)
 		{
-			log.warning(ex.toString());
+//			log.warning(ex.toString());
 		}
 	}
 

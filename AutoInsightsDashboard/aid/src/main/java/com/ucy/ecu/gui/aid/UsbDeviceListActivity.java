@@ -45,7 +45,6 @@ import com.hoho.android.usbserial.driver.UsbSerialProber;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Shows a {@link ListView} of available USB devices.
@@ -55,7 +54,6 @@ import java.util.logging.Logger;
 public final class UsbDeviceListActivity extends Activity
 {
 	private static final String TAG = UsbDeviceListActivity.class.getSimpleName();
-	private static final Logger log = Logger.getLogger(TAG);
 	
 	/** selected USB port */
 	public static UsbSerialPort selectedPort = null;
@@ -141,10 +139,8 @@ public final class UsbDeviceListActivity extends Activity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				log.fine("Pressed item " + position);
 				if (position >= mEntries.size())
 				{
-					log.warning("Illegal position.");
 					return;
 				}
 
@@ -154,7 +150,6 @@ public final class UsbDeviceListActivity extends Activity
 				Intent intent = new Intent();
 				// Set result and finish this Activity
 				setResult(Activity.RESULT_OK, intent);
-				log.fine("Sending Result...");
 				finish();
 			}
 		});
@@ -182,7 +177,6 @@ public final class UsbDeviceListActivity extends Activity
 			@Override
 			protected List<UsbSerialPort> doInBackground(Void... params)
 			{
-				log.fine("Refreshing device list ...");
 				final List<UsbSerialDriver> drivers =
 					UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
 				final List<UsbSerialPort> result = new ArrayList<>();
@@ -190,9 +184,6 @@ public final class UsbDeviceListActivity extends Activity
 				for (final UsbSerialDriver driver : drivers)
 				{
 					final List<UsbSerialPort> ports = driver.getPorts();
-					log.fine(String.format("+ %s: %s selectedPort%s",
-					                         driver, ports.size(),
-					                         ports.size() == 1 ? "" : "s"));
 					result.addAll(ports);
 				}
 
@@ -208,7 +199,6 @@ public final class UsbDeviceListActivity extends Activity
 				TextView numFound = findViewById(R.id.num_found);
 				numFound.setText(getString(R.string.devices_found, result.size()));
 				mAdapter.notifyDataSetChanged();
-				log.fine("Done refreshing, " + mEntries.size() + " entries found.");
 			}
 
 		}.execute();

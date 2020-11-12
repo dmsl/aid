@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,13 +57,11 @@ public class MyMediaBrowserService extends MediaBrowserServiceCompat
 
     public void onCreate(){
         super.onCreate();
-        Log.d("mediaservice","started");
         mSession = new MediaSessionCompat(this, "MusicService");
         MediaSessionCompat.Token sessionToken = mSession.getSessionToken();
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // register for later changes
         prefs.registerOnSharedPreferenceChangeListener(this);
-        Log.d("mediaservice",prefs.getAll().toString());
         setSessionToken(mSession.getSessionToken());
         mReceiver=new MyReceiver();
         IntentFilter filter = new IntentFilter();
@@ -99,7 +96,6 @@ public class MyMediaBrowserService extends MediaBrowserServiceCompat
     public void onLoadChildren(final String parentMediaId,
                                final Result<List<MediaBrowserCompat.MediaItem>> result) {
 
-        Log.d("ParentId", parentMediaId);
         result.detach();
         MusicLibrary ms = new MusicLibrary();
         ms.init();

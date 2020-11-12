@@ -102,6 +102,8 @@ class MusicLibrary {
                     topic = Character.toLowerCase(topic.charAt(0)) + topic.substring(1);
                     value = db.getValue(topic);
                     String rounded = nf.format(value);
+                    String unit = db.getUnit(topic);
+                    rounded = rounded + " " + unit;
                     MediaMetadataCompat item = new MediaMetadataCompat.Builder()
                             .putString(MediaMetadata.METADATA_KEY_MEDIA_ID,it)
                             .putString(MediaMetadata.METADATA_KEY_ARTIST,rounded)
@@ -124,6 +126,8 @@ class MusicLibrary {
                 float val = values.get(i).floatValue();
                 String rounded = nf.format(val);
                 String formatted = names.replace('_',' ');
+                String unit = db.getUnit(names);
+                rounded = rounded + " " + unit;
                 formatted = Character.toUpperCase(formatted.charAt(0)) + formatted.substring(1);
                 MediaMetadataCompat item = new MediaMetadataCompat.Builder()
                         .putString(MediaMetadata.METADATA_KEY_MEDIA_ID, formatted)

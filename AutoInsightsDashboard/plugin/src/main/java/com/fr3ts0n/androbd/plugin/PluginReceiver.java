@@ -20,7 +20,6 @@ abstract public class PluginReceiver extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Log.v(toString(), "Broadcast received: " + intent);
         intent.setClass(context, getPluginClass());
         context.startService(intent);
     }

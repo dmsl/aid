@@ -26,8 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 /**
  * Generic Base Class of Protocol header hadling
@@ -40,7 +40,7 @@ public abstract class ProtoHeader
 {
 
 	/** Logging object */
-	protected static Logger log = Logger.getLogger("com.fr3ts0n.prot");
+//	protected static Logger log = Logger.getLogger("com.fr3ts0n.prot");
 	/** List of telegram listeners */
 	@SuppressWarnings("rawtypes")
 	private final Vector TelegramListeners = new Vector();
@@ -477,7 +477,7 @@ public abstract class ProtoHeader
 				break;
 
 			default:
-				log.severe("Invalid Parameter Type" + String.valueOf(currParam[ID_TYPE]));
+//				log.severe("Invalid Parameter Type" + String.valueOf(currParam[ID_TYPE]));
 				break;
 		}
 		return (result);
@@ -536,7 +536,7 @@ public abstract class ProtoHeader
 				break;
 
 			default:
-				log.severe("Invalid Parameter Type" + String.valueOf(currParam[ID_TYPE]));
+//				log.severe("Invalid Parameter Type" + String.valueOf(currParam[ID_TYPE]));
 				break;
 		}
 		return (result);
@@ -774,7 +774,7 @@ public abstract class ProtoHeader
 				break;
 
 			default:
-				log.severe("Invalid Parameter Type" + String.valueOf(currParam[ID_TYPE]));
+//				log.severe("Invalid Parameter Type" + String.valueOf(currParam[ID_TYPE]));
 				break;
 		}
 		return (result);
@@ -889,16 +889,16 @@ public abstract class ProtoHeader
 			{
 				try
 				{
-					log.fine(this.toString() + " " + getParamDescriptors()[cnt] + ": " + getParamInt(cnt, buffer));
+//					log.fine(this.toString() + " " + getParamDescriptors()[cnt] + ": " + getParamInt(cnt, buffer));
 				} catch (Exception e)
 				{
 					// we don't want to do anything here ...
 				}
 			}
-			log.fine(this.toString() + " Payload : " + ProtUtils.hexDumpBuffer(getPayLoad(buffer)));
+//			log.fine(this.toString() + " Payload : " + ProtUtils.hexDumpBuffer(getPayLoad(buffer)));
 		} else
 		{
-			log.severe(this.toString() + " Invalid Telegram: '" + new String(buffer) + "' " + String.valueOf(buffer.length - getHeaderLength()));
+//			log.severe(this.toString() + " Invalid Telegram: '" + new String(buffer) + "' " + String.valueOf(buffer.length - getHeaderLength()));
 		}
 	}
 
@@ -917,11 +917,11 @@ public abstract class ProtoHeader
 	{
 		int cnt = 0;
 
-		log.fine(this.toString() + " RX:" + ProtUtils.hexDumpBuffer(buffer));
-		if (log.isLoggable(Level.FINE))
-		{
-			dumpParameters(buffer);
-		}
+//		log.fine(this.toString() + " RX:" + ProtUtils.hexDumpBuffer(buffer));
+//		if (log.isLoggable(Level.FINE))
+//		{
+//			dumpParameters(buffer);
+//		}
 
 		// if telegram is OK
 		if (checkTelegram(buffer))

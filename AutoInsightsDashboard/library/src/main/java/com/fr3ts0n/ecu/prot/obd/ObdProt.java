@@ -75,7 +75,7 @@ public class ObdProt extends ProtoHeader
      */
     public void setResetOnNrc(boolean resetOnNrc)
     {
-        log.info(String.format("Reset on NRC = %b", resetOnNrc));
+//        log.info(String.format("Reset on NRC = %b", resetOnNrc));
         this.resetOnNrc = resetOnNrc;
     }
 
@@ -287,7 +287,7 @@ public class ObdProt extends ProtoHeader
      */
     public void setFreezeFrame_Id(int freezeFrame_Id)
     {
-        log.info(String.format("FreezeFrame ID: %d", freezeFrame_Id));
+//        log.info(String.format("FreezeFrame ID: %d", freezeFrame_Id));
         this.freezeFrame_Id = freezeFrame_Id;
         setService(OBD_SVC_FREEZEFRAME, true);
     }
@@ -414,7 +414,7 @@ public class ObdProt extends ProtoHeader
             // if no items defined, create dummy item
             if (items == null)
             {
-                log.warning(String.format("unknown PID %02X", currPid));
+//                log.warning(String.format("unknown PID %02X", currPid));
 
                 // create new dummy item / OneToOne conversion
                 Conversion[] dummyCnvs = {EcuConversions.dfltCnv, EcuConversions.dfltCnv};
@@ -458,8 +458,8 @@ public class ObdProt extends ProtoHeader
                 pidSupported.add(i + start + 1);
             }
         }
-        log.fine(Long.toHexString(bitmask).toUpperCase() + "(" + Long.toHexString(
-                start) + "):" + pidSupported);
+//        log.fine(Long.toHexString(bitmask).toUpperCase() + "(" + Long.toHexString(
+//                start) + "):" + pidSupported);
         // if next block may be requested
         if ((bitmask & 1) != 0)
             // request next block
@@ -546,7 +546,7 @@ public class ObdProt extends ProtoHeader
                     // create NRC error message
                     String error = nrc.toString(svc);
                     // log error
-                    log.severe(error);
+//                    log.severe(error);
                     // notify change listeners
                     firePropertyChange(new PropertyChangeEvent(this, PROP_NRC, nrc, error));
                     // handle NRC reaction
@@ -683,7 +683,7 @@ public class ObdProt extends ProtoHeader
                                                            Messages.getString(
                                                            "customer.specific.trouble.code.see.manual"));
                                 }
-                                log.fine(String.format("+DFC: %04x: %s", key, code.toString()));
+//                                log.fine(String.format("+DFC: %04x: %s", key, code.toString()));
                                 tCodes.put(key, code);
                                 // if number of codes hasn't been delivered yet ...
                                 if(!hasNumCodes)
@@ -705,11 +705,11 @@ public class ObdProt extends ProtoHeader
                         break;
 
                     default:
-                        log.warning("Service not (yet) supported: " + msgService);
+//                        log.warning("Service not (yet) supported: " + msgService);
                 }
             } catch (Exception e)
             {
-                log.warning("'" + Arrays.toString(buffer) + "':" + e.getMessage());
+//                log.warning("'" + Arrays.toString(buffer) + "':" + e.getMessage());
             }
         }
         return (result);
@@ -870,7 +870,7 @@ public class ObdProt extends ProtoHeader
             case OBD_SVC_O2_RESULT:
             case OBD_SVC_MON_RESULT:
             default:
-                log.warning("Service not supported: " + obdService);
+//                log.warning("Service not supported: " + obdService);
         }
     }
 }

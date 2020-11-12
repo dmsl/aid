@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -265,8 +264,8 @@ class ObdItemAdapter extends ArrayAdapter<Object>
                     String topic = pv.get(EcuDataPv.FID_MNEMONIC).toString();
                     if(!topic.contains("PID")){
                         float value = ((Number)event.getValue()).floatValue();
-                        Log.d("units", topic + " " +  pv.get(EcuDataPv.FID_UNITS).toString());
-                        db.insertValue(topic, value);
+                        String unit = pv.get(EcuDataPv.FID_UNITS).toString();
+                        db.insertValue(topic, value, unit);
                     }
                 }catch (Exception e){
 

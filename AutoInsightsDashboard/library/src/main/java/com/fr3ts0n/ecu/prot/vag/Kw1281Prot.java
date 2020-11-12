@@ -44,8 +44,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 
 /**
@@ -180,7 +180,7 @@ public class Kw1281Prot extends ProtoHeader
 	public Kw1281Prot()
 	{
 		super();
-		log = Logger.getLogger("com.fr3ts0n.prot.1281");
+//		log = Logger.getLogger("com.fr3ts0n.prot.1281");
 		initialize();
 	}
 
@@ -223,10 +223,10 @@ public class Kw1281Prot extends ProtoHeader
 				String fileName = vid.get(EcuDataPv.FID_VALUE).toString().trim() + ".prs";
 				if (fileName.equals(lastPresetName))
 				{
-					log.info("Preset already loaded:" + fileName);
+//					log.info("Preset already loaded:" + fileName);
 				} else
 				{
-					log.info("Load Preset: " + fileName);
+//					log.info("Load Preset: " + fileName);
 					try
 					{
 						BufferedReader rdr = new BufferedReader(new FileReader(fileName));
@@ -267,7 +267,7 @@ public class Kw1281Prot extends ProtoHeader
 							// make items known items
 							knownGrpItems.put(frmNum, grpVec);
 						}
-						log.info("Preset loaded: " + fileName);
+//						log.info("Preset loaded: " + fileName);
 						// notify about property change
 						firePropertyChange(new PropertyChangeEvent(this, "preset", lastPresetName, fileName));
 						// remember name of preset
@@ -275,7 +275,7 @@ public class Kw1281Prot extends ProtoHeader
 						rdr.close();
 					} catch (IOException ex)
 					{
-						log.warning("LoadPreset: " + ex.toString());
+//						log.warning("LoadPreset: " + ex.toString());
 					}
 				}
 			}
@@ -309,7 +309,7 @@ public class Kw1281Prot extends ProtoHeader
 				// if file aleady exists, we don't save it
 				if (!pstFile.exists())
 				{
-					log.info("Save Preset: " + fileName);
+//					log.info("Save Preset: " + fileName);
 					FileWriter wtr = null;
 					try
 					{
@@ -334,10 +334,10 @@ public class Kw1281Prot extends ProtoHeader
 							// finish data group entry
 							wtr.write("\n");
 						}
-						log.info("Preset saved: " + fileName);
+//						log.info("Preset saved: " + fileName);
 					} catch (IOException ex)
 					{
-						log.severe("SavePreset: " + ex.toString());
+//						log.severe("SavePreset: " + ex.toString());
 					} finally
 					{
 						try
@@ -345,12 +345,12 @@ public class Kw1281Prot extends ProtoHeader
 							wtr.close();
 						} catch (IOException ex)
 						{
-							log.severe("SavePreset: " + ex.toString());
+//							log.severe("SavePreset: " + ex.toString());
 						}
 					}
 				} else
 				{
-					log.info("Preset saving skipped: " + fileName);
+//					log.info("Preset saving skipped: " + fileName);
 				}
 			}
 		};
@@ -648,7 +648,7 @@ public class Kw1281Prot extends ProtoHeader
 	{
 		int cnt = 0;
 
-		log.fine("RX:" + ProtUtils.hexDumpBuffer(buffer));
+//		log.fine("RX:" + ProtUtils.hexDumpBuffer(buffer));
 
 		// if telegram is OK
 		if (checkTelegram(buffer))
@@ -726,7 +726,7 @@ public class Kw1281Prot extends ProtoHeader
 				case ID_GRPINFO_DATA:
 					if (currGrpItems == null || currGrpItems.size() < BLK_NUM_ITEMS)
 					{
-						log.severe(String.format("Missing/Incomplete Metadata for GRP:%d", (int) getCurrDataGroup()));
+//						log.severe(String.format("Missing/Incomplete Metadata for GRP:%d", (int) getCurrDataGroup()));
 					}
 				{
 					for (int i = 0; i < Math.min(payLoad.length, currGrpItems.size()); i++)
@@ -738,7 +738,7 @@ public class Kw1281Prot extends ProtoHeader
 							currItm.updatePvFomBuffer(payLoad);
 						} else
 						{
-							log.severe(String.format("Data w/o meta GRP:%d, ITM:%d", (int) getCurrDataGroup(), i));
+//							log.severe(String.format("Data w/o meta GRP:%d, ITM:%d", (int) getCurrDataGroup(), i));
 						}
 					}
 				}
@@ -788,7 +788,7 @@ public class Kw1281Prot extends ProtoHeader
 							}
 						} else
 						{
-							log.warning("Unknown data ID:" + dId);
+//							log.warning("Unknown data ID:" + dId);
 						}
 					}
 					// if we do group reading and desired group has not changed ...
@@ -847,7 +847,7 @@ public class Kw1281Prot extends ProtoHeader
 					break;
 
 				case ID_NODATA:
-					log.info(String.format("NODATA: Group:%d -> remove", (int) getCurrDataGroup()));
+//					log.info(String.format("NODATA: Group:%d -> remove", (int) getCurrDataGroup()));
 					// since data is not available, remove group from map ...
 					knownGrpItems.remove(Integer.valueOf(getCurrDataGroup()));
 					// if we finished the initial turaround, save preset data
@@ -994,7 +994,7 @@ public class Kw1281Prot extends ProtoHeader
 			{
 				public void actionPerformed(ActionEvent arg0)
 				{
-					log.warning("CommTimeout -> re-initializing");
+//					log.warning("CommTimeout -> re-initializing");
 					adapt.init5Baud(adress);
 				}
 			});
@@ -1011,7 +1011,7 @@ public class Kw1281Prot extends ProtoHeader
 						Thread.sleep(500);
 					} catch (Exception e)
 					{
-						log.log(Level.SEVERE, null, e);
+//						log.log(Level.SEVERE, null, e);
 					}
 				}
 			}

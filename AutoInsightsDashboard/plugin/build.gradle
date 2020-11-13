@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion 15
         // SDK 25 to allow background service mechanism for plugins
-        targetSdkVersion 26
+        targetSdkVersion 30
         versionCode 10100
         versionName '1.1.0'
 
@@ -18,9 +18,7 @@ android {
     }
 
     buildTypes {
-        debug {
-            resValue "string", "app_version", defaultConfig.versionName
-        }
+
 
         release {
             resValue "string", "app_version", defaultConfig.versionName

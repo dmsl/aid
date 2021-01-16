@@ -5,13 +5,23 @@ This is an Android Application that uses Android Auto to project OBD2 data on a 
 Follow the link for full instructions on how to use the applicaiton.
 [AID](https://aid.cs.ucy.ac.cy/)
 
-To download the source code:
-```bash
-git clone https://github.com/dmsl/aid --recursive-submodules
-```
-
+# Video
+[Youtube link](https://www.youtube.com/watch?v=ihxgydwkFgU)
 
 # Further read
 Thesis that describes the process used by this application and analyzed modern automotive systems.
 [An OBD2 data monitoring platform](./AnOBDDataMonitoringPlatforminAndroidAuto.pdf)
 
+# Android Auto Screens
+
+![Front Screen](Images/aidfront.PNG)
+
+![All Items Screen](Images/aiduto.PNG)
+
+![Selected Items Screen](Images/'aid selected.PNG')
+
+# Clone
+To download the source code:
+```bash
+git clone https://github.com/dmsl/aid --recursive-submodules
+```

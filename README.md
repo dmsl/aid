@@ -23,5 +23,5 @@ Thesis that describes the process used by this application and analyzed modern a
 # Clone
 To download the source code:
 ```bash
-git clone https://github.com/dmsl/aid --recursive-submodules
+git clone https://github.com/dmsl/aid --recurse-submodules
 ```

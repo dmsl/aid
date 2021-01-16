@@ -7,5 +7,5 @@ Follow the link for full instructions on how to use the applicaiton.
 
 #Further read
 Thesis that describes the process used by this application and analyzed modern automotive systems.
-[An OBD2 data monitoring platform](./"An OBD Data Monitoring Platform in Android Auto.pdf")
+[An OBD2 data monitoring platform](./AnOBDDataMonitoringPlatforminAndroidAuto.pdf)
 

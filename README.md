@@ -16,9 +16,9 @@ Thesis that describes the process used by this application and analyzed modern a
 
 ![Front Screen](Images/aidfront.PNG)
 
-![All Items Screen](Images/aiduto.PNG)
+![All Items Screen](Images/aidauto.PNG)
 
-![Selected Items Screen](Images/'aid selected.PNG')
+![Selected Items Screen](Images/aid%20selected.PNG)
 
 # Clone
 To download the source code:

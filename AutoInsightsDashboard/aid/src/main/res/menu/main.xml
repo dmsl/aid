@@ -32,6 +32,12 @@
         android:title="@string/settings" />
 
     <item
+        android:id="@+id/log"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:showAsAction="ifRoom"
+        android:title="Connection Log" />
+
+    <item
         android:id="@+id/obd_services"
         android:icon="@android:drawable/ic_menu_more"
         android:menuCategory="container"

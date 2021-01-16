@@ -20,6 +20,7 @@
 package com.ucy.ecu.gui.aid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 
 import com.fr3ts0n.prot.StreamHandler;
@@ -61,6 +62,10 @@ public class NetworkCommService
 	@Override
 	public void start()
 	{
+		Intent logIntent = new Intent("recMess");
+		logIntent.putExtra("Message", "Start");
+		mContext.sendBroadcast(logIntent);
+
 		// set up protocol handlers
 		elm.addTelegramWriter(ser);
 		// create communication thread
@@ -72,12 +77,18 @@ public class NetworkCommService
 	public void stop()
 	{
 		elm.removeTelegramWriter(ser);
+		Intent logIntent = new Intent("recMess");
+		logIntent.putExtra("Message", "Stopping");
+		mContext.sendBroadcast(logIntent);
 		// close socket
 		try
 		{
 			mSocket.close();
 		} catch (Exception e)
 		{
+			logIntent = new Intent("recMess");
+			logIntent.putExtra("Message", e.getMessage());
+			mContext.sendBroadcast(logIntent);
 		}
 		setState(STATE.OFFLINE);
 	}
@@ -118,9 +129,15 @@ public class NetworkCommService
 		@Override
 		public void run()
 		{
+			Intent logIntent = new Intent("recMess");
+			logIntent.putExtra("Message", "Connecting to"+portNum+" "+device);
+			mContext.sendBroadcast(logIntent);
 			setState(STATE.CONNECTING);
 			try
 			{
+				logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Creating Socket");
+				mContext.sendBroadcast(logIntent);
 				// create socket connection
 				mSocket = new Socket();
 				InetSocketAddress addr = new InetSocketAddress(device, portNum);
@@ -129,11 +146,16 @@ public class NetworkCommService
 				ser.setStreams(mSocket.getInputStream(), mSocket.getOutputStream());
 				// we are connected -> signal connection established
 				connectionEstablished(device);
-
+				logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Connection established");
+				mContext.sendBroadcast(logIntent);
 				// start communication service thread
 				svc.start();
 			} catch (Exception e)
 			{
+				logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", e.getMessage());
+				mContext.sendBroadcast(logIntent);
 				connectionFailed();
 			}
 		}

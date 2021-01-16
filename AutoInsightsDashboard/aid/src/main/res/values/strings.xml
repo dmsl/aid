@@ -79,7 +79,7 @@ period of time while the ECU recalibrates itself.
     </string-array>
     <string name="items_for_display">Data items to display</string>
     <string name="items_for_display_descr">Select all data items to be displayed …</string>
-    <string-array name="empty" translatable="false"/>
+    <string-array name="empty" translatable="false" />
     <string name="debugging">Debugging</string>
     <string name="logging_level">Logging level</string>
     <string name="logging_level_description">Level of details to be logged into debug log file</string>
@@ -293,4 +293,15 @@ period of time while the ECU recalibrates itself.
     <string name="update_period" translatable="false">Update period</string>
     <string name="update_period_sum" translatable="false">Time [seconds] between data updates on Car</string>
     <string name="data_items_sum" translatable="false">Select data items to be shown on Android Auto</string>
+    <string name="title_activity_log">LogActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

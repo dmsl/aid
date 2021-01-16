@@ -31,9 +31,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -52,6 +54,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.fr3ts0n.androbd.plugin.Plugin;
 import com.fr3ts0n.androbd.plugin.mgr.PluginManager;
@@ -75,6 +79,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Timer;
@@ -314,12 +319,20 @@ public class MainActivity extends PluginManager
 				.commit();
 	}
 
+	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		// instantiate superclass
 		super.onCreate(savedInstanceState);
-
+		SimpleDateFormat dateFormat =
+				null;
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+			dateFormat = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss", Locale.getDefault());
+		}
+		String logDate = dateFormat.format(new Date());
+//		Debug.startMethodTracing(
+//				"sample-" + logDate);
 		onCreatePreferenceFragment();
 		DBHelper db = new DBHelper(this);
 		//start the media browser service
@@ -458,6 +471,7 @@ public class MainActivity extends PluginManager
 	{
 		// Stop toolbar hider thread
 		setAutoHider(false);
+//		Debug.stopMethodTracing();
 
 		try
 		{
@@ -601,6 +615,11 @@ public class MainActivity extends PluginManager
 				// Launch the BtDeviceListActivity to see devices and do scan
 				Intent settingsIntent = new Intent(this, SettingsActivity.class);
 				startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+				return true;
+
+			case R.id.log:
+				Intent logIntent = new Intent(this, LogActivity.class);
+				startActivityForResult(logIntent, 1);
 				return true;
 
 			case R.id.plugin_manager:

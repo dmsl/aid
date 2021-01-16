@@ -20,6 +20,7 @@
 package com.ucy.ecu.gui.aid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,7 +71,7 @@ public abstract class CommService
 	CommService()
 	{
 		super();
-		// mAdapter = MainActivity.mBluetoothAdapter;
+//		 mAdapter = MainActivity.mBluetoothAdapter;
 		mState = STATE.NONE;
 	}
 
@@ -150,6 +151,10 @@ public abstract class CommService
 		bundle.putString(MainActivity.TOAST, mContext.getString(R.string.unabletoconnect));
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);
+
+		Intent logIntent = new Intent("recMess");
+		logIntent.putExtra("Message", "Unable to connect");
+		mContext.sendBroadcast(logIntent);
 	}
 
 	/**
@@ -166,6 +171,10 @@ public abstract class CommService
 		bundle.putString(MainActivity.TOAST, mContext.getString(R.string.connectionlost));
 		msg.setData(bundle);
 		mHandler.sendMessage(msg);
+
+		Intent logIntent = new Intent("recMess");
+		logIntent.putExtra("Message", "Connection Lost");
+		mContext.sendBroadcast(logIntent);
 	}
 
 	/**
@@ -182,5 +191,9 @@ public abstract class CommService
 
 		// set state to connected
 		setState(STATE.CONNECTED);
+
+		Intent logIntent = new Intent("recMess");
+		logIntent.putExtra("Message", "Connection to"+deviceName);
+		mContext.sendBroadcast(logIntent);
 	}
 }

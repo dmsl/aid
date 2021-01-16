@@ -105,12 +105,6 @@ public class MyMediaBrowserService extends MediaBrowserServiceCompat
         else{
             result.sendResult(ms.update(this,parentMediaId,mSelectedItems));
         }
-
-        //result.sendResult(ls);
-        //ms.createMediaMetadata(getApplicationContext());
-
-        //result.sendResult(ms.getMediaItems());
-
     }
 
     @Override

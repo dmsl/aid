@@ -23,6 +23,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.ParcelUuid;
 
@@ -228,13 +229,14 @@ public class BtCommService extends CommService
 				}
 			} catch (IOException e)
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Socket type:"+mSocketType+"creation failed");
+				mContext.sendBroadcast(logIntent);
 			}
 			mmSocket = tmp;
 
 		}
-		
 
-		
 		public void run()
 		{
 
@@ -250,6 +252,9 @@ public class BtCommService extends CommService
 			{
 				cancel();
 
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", e.getMessage());
+				mContext.sendBroadcast(logIntent);
 				BluetoothSocket sockFallback;
 				Class<?> clazz = mmSocket.getRemoteDevice().getClass();
 				Class<?>[] paramTypes = new Class<?>[]{Integer.TYPE};
@@ -266,6 +271,11 @@ public class BtCommService extends CommService
 				}
 				catch (Exception e2)
 				{
+					Intent li = new Intent("recMess");
+					li.putExtra("Message", e2.getMessage());
+					mContext.sendBroadcast(li);
+
+
 					connectionFailed();
 					return;
 				}
@@ -285,9 +295,16 @@ public class BtCommService extends CommService
 		{
 			try
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Closing socket");
+				mContext.sendBroadcast(logIntent);
+
 				mmSocket.close();
 			} catch (IOException e)
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", e.getMessage());
+				mContext.sendBroadcast(logIntent);
 			}
 		}
 	}
@@ -315,6 +332,9 @@ public class BtCommService extends CommService
 				tmpOut = socket.getOutputStream();
 			} catch (IOException e)
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", e.getMessage());
+				mContext.sendBroadcast(logIntent);
 			}
 
 			mmInStream = tmpIn;
@@ -335,6 +355,9 @@ public class BtCommService extends CommService
 			} catch (Exception ex)
 			{
 				// Intentionally ignore
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Communication thread aborted");
+				mContext.sendBroadcast(logIntent);
 			}
 			connectionLost();
 		}
@@ -356,6 +379,9 @@ public class BtCommService extends CommService
 				mmSocket.close();
 			} catch (IOException e)
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", e.getMessage());
+				mContext.sendBroadcast(logIntent);
 			}
 		}
 

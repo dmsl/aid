@@ -58,6 +58,10 @@ public class UsbCommService extends CommService
 			@Override
 			public void onRunError(Exception e)
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "On run error: "+e.getMessage());
+				mContext.sendBroadcast(logIntent);
+
 				connectionLost();
 			}
 
@@ -160,7 +164,9 @@ public class UsbCommService extends CommService
 				sPort.open(connection);
 				sPort.setDTR(true);
 				sPort.setParameters(getBaudRate(), 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Starting io manager:");
+				mContext.sendBroadcast(logIntent);
 				Thread runner = new Thread(mSerialIoManager);
 				runner.setPriority(Thread.MAX_PRIORITY);
 				runner.start();
@@ -170,6 +176,9 @@ public class UsbCommService extends CommService
 			}
 			catch (IOException e)
 			{
+				Intent logIntent = new Intent("recMess");
+				logIntent.putExtra("Message", "Error setting up service: "+e.getMessage());
+				mContext.sendBroadcast(logIntent);
 				try
 				{
 					sPort.close();
@@ -192,6 +201,10 @@ public class UsbCommService extends CommService
 
 		if (mSerialIoManager != null)
 		{
+			Intent logIntent = new Intent("recMess");
+			logIntent.putExtra("Message", "Stopping");
+			mContext.sendBroadcast(logIntent);
+
 			mSerialIoManager.stop();
 			mSerialIoManager = null;
 			connectionLost();
@@ -212,6 +225,10 @@ public class UsbCommService extends CommService
 		}
 		catch(Exception ex)
 		{
+			Intent logIntent = new Intent("recMess");
+			logIntent.putExtra("Message", ex.getMessage());
+			mContext.sendBroadcast(logIntent);
+
 			connectionLost();
 		}
 	}

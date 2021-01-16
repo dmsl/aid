@@ -118,7 +118,7 @@ public class SettingsActivity
 			addPreferencesFromResource(R.xml.settings);
 
 			// set up communication media selection
-			//setupCommMediaSelection();
+			setupCommMediaSelection();
 			// set up protocol selection
 			//setupProtoSelection();
 			// set up ELM command selection

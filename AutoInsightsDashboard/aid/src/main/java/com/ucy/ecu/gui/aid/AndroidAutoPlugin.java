@@ -1,16 +1,23 @@
 package com.ucy.ecu.gui.aid;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import android.os.IBinder;
+import android.util.Log;
 
 import com.fr3ts0n.androbd.plugin.PluginInfo;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -31,6 +38,7 @@ public class AndroidAutoPlugin extends Service implements
             "https://github.com/dmsl/androidauto"
     );
 
+    BroadcastReceiver mReceiver;
     /**
      * Preference keys
      */
@@ -38,6 +46,7 @@ public class AndroidAutoPlugin extends Service implements
     static final String ITEMS_SELECTED = "selection_items";
     static final String ITEMS_KNOWN = "known_items";
 
+    protected static ArrayList<String>  logmess = new ArrayList<>();
     /**
      * The data collection
      */
@@ -117,12 +126,19 @@ public class AndroidAutoPlugin extends Service implements
         mIntent.putExtra("selected",selectedItems);
         sendBroadcast(mIntent);
         updateThread.start();
+
+
+        mReceiver=new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("recMess");
+        registerReceiver(mReceiver, filter);
     }
 
     @Override
     public void onDestroy()
     {
         // interrupt cyclic thread
+        unregisterReceiver(mReceiver);
         updateThread.interrupt();
 
         // forget about settings changes
@@ -169,6 +185,11 @@ public class AndroidAutoPlugin extends Service implements
         performAction();
     }
 
+    public void addmess(String mess){
+        logmess.add(mess);
+    }
+
+
     /**
      * get own plugin info
      */
@@ -182,26 +203,6 @@ public class AndroidAutoPlugin extends Service implements
      */
     public void performAction()
     {
-
-        // Nothing to be sent - finished!
-//        if (valueMap.isEmpty()) { return; }
-//
-//        Boolean insertedValues = false;
-//        synchronized (valueMap)
-//        {
-//            // loop through data items
-//            for (Map.Entry<String, String> entry : valueMap.entrySet())
-//            {
-//                // get topic and value
-//                String topic = entry.getKey();
-//                String value = entry.getValue();
-//                try{
-//                    db.insertValue(topic, Float.parseFloat(value));
-//                    insertedValues = true;
-//                }catch (Exception e){
-//                }
-//            }
-//        }
         if(true) {
             String[] selectedItems = new String[mSelectedItems.size()];
             mSelectedItems.toArray(selectedItems);
@@ -263,5 +264,24 @@ public class AndroidAutoPlugin extends Service implements
         {
             valueMap.put(key, value);
         }
+    }
+
+
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if((intent!= null)&&(intent.getExtras()!=null)){
+                String[] sl = intent.getStringArrayExtra("selected");
+                String message = intent.getStringExtra("Message");
+                Date currentTime = Calendar.getInstance().getTime();
+                logmess.add(currentTime.toString()+" "+message);
+
+                Intent logIntent = new Intent("messCh");
+                sendBroadcast(logIntent);
+            }
+        }
+
+
     }
 }
